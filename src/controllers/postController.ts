@@ -12,6 +12,7 @@ export const getPosts = async (req: Request, res: Response) => {
     });
     res.json(posts);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Failed to fetch posts' });
   }
 };
@@ -39,7 +40,7 @@ export const getPostById = async (req: Request, res: Response) => {
 // Create a new post
 export const createPost = async (req: Request, res: Response) => {
   const { title, content, published } = req.body;
-  const { userId } = req.user; // Extracted from auth middleware
+  const { userId } = req.user!; // Extracted from auth middleware
 
   try {
     const post = await prisma.post.create({
