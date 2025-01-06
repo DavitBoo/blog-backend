@@ -18,7 +18,7 @@ export const getPosts = async (req: Request, res: Response) => {
 };
 
 // Get a single post by ID
-export const getPostById = async (req: Request, res: Response) => {
+export const getPostById = async (req: Request, res: Response): Promise<any> => {
   const { id } = req.params;
 
   try {
@@ -36,11 +36,11 @@ export const getPostById = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to fetch post' });
   }
 };
-
+  
 // Create a new post
 export const createPost = async (req: Request, res: Response) => {
   const { title, content, published } = req.body;
-  const { userId } = req.user!; // Extracted from auth middleware
+  const { userId } = req.user as { userId: number }; // Extracted from auth middleware
 
   try {
     const post = await prisma.post.create({

@@ -1,13 +1,16 @@
 import express from 'express';
+import passport from 'passport';
 import { createPost, getPosts, getPostById, updatePost, deletePost } from '../controllers/postController';
-import { authenticate } from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
+// Protect routes with Passport
 router.get('/', getPosts); // Public: Get all published posts
 router.get('/:id', getPostById); // Public: Get a single post by ID
-router.post('/', authenticate, createPost); // Protected: Create a new post (authors only)
-router.put('/:id', authenticate, updatePost); // Protected: Update a post (authors only)
-router.delete('/:id', authenticate, deletePost); // Protected: Delete a post (authors only)
+
+// ! I need to test this routes with passport.js implementation
+router.post('/', passport.authenticate('jwt', { session: false }), createPost); // Protected: Create a new post (requires authentication)
+router.put('/:id', passport.authenticate('jwt', { session: false }), updatePost); // Protected: Update a post (requires authentication)
+router.delete('/:id', passport.authenticate('jwt', { session: false }), deletePost); // Protected: Delete a post (requires authentication)
 
 export default router;
