@@ -1,7 +1,6 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { PrismaClient } from '@prisma/client';
-import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -22,15 +21,23 @@ passport.use(
         });
 
         if (!user) {
-          return done(null, false); 
+          return done(null, false, { message: 'User not found' });
         }
 
         return done(null, user); 
       } catch (error) {
+        console.error('Error during authentication:', error);
         return done(error, false); 
       }
     }
   )
 );
+
+// Middleware to initialize passport
+export const initializePassport = () => passport.initialize();
+
+// Middleware to authenticate requests
+export const authenticateJwt = passport.authenticate('jwt', { session: false });
+
 
 export default passport;
