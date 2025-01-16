@@ -23,6 +23,8 @@ export const registerUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
 
+  console.log(req.body);
+
   try {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user || !(await bcrypt.compare(password, user.password))) {

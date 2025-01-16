@@ -33,9 +33,24 @@ export const getPostById = async (req: Request, res: Response): Promise<any> => 
 
     res.json(post);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch post' });
+    res.status(500).json({ error: 'Failed to fetch post :((' });
   }
 };
+
+// get the post from the backend 
+export const getPostsBackEnd = async (req: Request, res: Response) => {
+  console.log(req);
+  try {
+    const posts = await prisma.post.findMany({
+      include: { author: { select: { name: true, email: true } } },
+    });
+    console.log(posts);
+    res.json(posts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Failed to fetch posts, sí?' });
+  }
+}
   
 // Create a new post
 export const createPost = async (req: Request, res: Response) => {
