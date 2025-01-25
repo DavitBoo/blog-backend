@@ -26,6 +26,7 @@ model Post {
   authorId    Int
   author      User      @relation(fields: [authorId], references: [id])
   comments    Comment[]
+  coverImage  Bytes?    
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
