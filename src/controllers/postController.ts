@@ -22,31 +22,6 @@ export const getPosts = async (req: Request, res: Response) => {
   }
 };
 
-
-// TODO --- must be update getPost endpoint
-// export const getPost = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-
-//   try {
-//     const post = await prisma.post.findUnique({
-//       where: { id: Number(id) },
-//     });
-
-//     if (!post) {
-//       return res.status(404).json({ error: "Post not found" });
-//     }
-
-//     const coverImageBase64 = post.coverImage
-//       ? `data:image/jpeg;base64,${post.coverImage.toString("base64")}`
-//       : null;
-
-//     res.status(200).json({ ...post, coverImage: coverImageBase64 });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(400).json({ error: "Failed to fetch post" });
-//   }
-// };
-
 // Get a single post by ID
 export const getPostById = async (req: Request, res: Response): Promise<any> => {
   const { id } = req.params;
@@ -84,30 +59,17 @@ export const getPostsBackEnd = async (req: Request, res: Response) => {
   
 // Create a new post
 export const createPost = async (req: Request, res: Response) => {
-  upload.single("cover")(req, res, async (err) => {
-    if (err) {
-      return res.status(400).json({ error: "Failed to upload cover image" });
-    }
+  const { title, content, published } = req.body;
+  const { userId } = req.user as { userId: number }; // Extracted from auth middleware
 
-    const { title, content, published } = req.body;
-    const { userId } = req.user as { userId: number }; // Extracted from auth middleware
-
-    try {
-      const post = await prisma.post.create({
-        data: {
-          title,
-          content,
-          published: published,
-          authorId: userId,
-          coverImage: req.file?.buffer, // Almacenar el buffer del archivo
-        },
-      });
-      res.status(201).json(post);
-    } catch (error) {
-      console.error(error);
-      res.status(400).json({ error: "Failed to create post" });
-    }
-  });
+  try {
+    const post = await prisma.post.create({
+      data: { title, content, published, authorId: userId },
+    });
+    res.status(201).json(post);
+  } catch (error) {
+    res.status(400).json({ error: 'Failed to create post' });
+  }
 };
 
 // Update a post
