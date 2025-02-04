@@ -59,16 +59,31 @@ export const getPostsBackEnd = async (req: Request, res: Response) => {
   
 // Create a new post
 export const createPost = async (req: Request, res: Response) => {
-  const { title, content, published } = req.body;
-  const { userId } = req.user as { userId: number }; // Extracted from auth middleware
-
+  const { title, content, labels, isPublished } = req.body;
+  let { id }: any = req.user; 
+  let userId = parseInt(id);
+  console.log(labels);
   try {
     const post = await prisma.post.create({
-      data: { title, content, published, authorId: userId },
+      data: {
+        title,
+        content,
+        published: isPublished,
+        authorId: userId,
+        labels: {
+          connect: labels.map((id: string | number) => ({ id: parseInt(id as string) }))
+        }
+      },
+      include: {
+        labels: true,
+        author: true
+      }
     });
     res.status(201).json(post);
   } catch (error) {
-    res.status(400).json({ error: 'Failed to create post' });
+    console.error('Error creating post:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    res.status(400).json({ error: 'Failed to create post', details: errorMessage });
   }
 };
 

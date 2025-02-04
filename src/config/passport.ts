@@ -14,6 +14,7 @@ passport.use(
       secretOrKey: JWT_SECRET, // Secret key to verify the JWT
     },
     async (payload, done) => {
+      console.log(payload);
       try {
         // Find the user based on the userId in the JWT payload
         const user = await prisma.user.findUnique({

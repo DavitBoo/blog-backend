@@ -26,10 +26,11 @@ model Post {
   authorId    Int
   author      User      @relation(fields: [authorId], references: [id])
   comments    Comment[]
-  coverImage  Bytes?    
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  labels      Label[]   @relation("PostToLabel")
 }
+
 
 model Comment {
   id        Int      @id @default(autoincrement())
@@ -47,6 +48,7 @@ enum Role {
 model Label {
   id        Int      @id @default(autoincrement())
   name      String   @unique
+  posts     Post[]   @relation("PostToLabel")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
