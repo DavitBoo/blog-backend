@@ -13,8 +13,12 @@ export const getPosts = async (req: Request, res: Response) => {
   try {
     const posts = await prisma.post.findMany({
       where: { published: true },
-      include: { author: { select: { name: true, email: true } } },
+      include: { 
+        author: { select: { name: true, email: true } },
+        labels: true 
+      },
     });
+    console.log(posts);
     res.json(posts);
   } catch (error) {
     console.log(error);
@@ -29,7 +33,11 @@ export const getPostById = async (req: Request, res: Response): Promise<any> => 
   try {
     const post = await prisma.post.findUnique({
       where: { id: parseInt(id) },
-      include: { author: { select: { name: true, email: true } }, comments: true },
+      include: { 
+        author: { select: { name: true, email: true } }, 
+        comments: true,
+        labels: true
+      },
     });
 
     if (!post) {
