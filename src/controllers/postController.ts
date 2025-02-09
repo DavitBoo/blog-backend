@@ -114,7 +114,6 @@ export const updatePost = async (req: Request, res: Response) => {
 // Delete a post
 export const deletePost = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   try {
     await prisma.post.delete({ where: { id: parseInt(id) } });
     res.status(204).send();

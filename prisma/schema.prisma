@@ -37,7 +37,7 @@ model Comment {
   email     String
   content   String
   postId    Int
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade) 
   createdAt DateTime @default(now())
 }
 
