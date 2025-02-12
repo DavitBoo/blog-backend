@@ -18,10 +18,8 @@ export const getPosts = async (req: Request, res: Response) => {
         labels: true 
       },
     });
-    console.log(posts);
     res.json(posts);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to fetch posts' });
   }
 };
@@ -29,7 +27,7 @@ export const getPosts = async (req: Request, res: Response) => {
 // Get a single post by ID
 export const getPostById = async (req: Request, res: Response): Promise<any> => {
   const { id } = req.params;
-
+  console.log(id);
   try {
     const post = await prisma.post.findUnique({
       where: { id: parseInt(id) },
@@ -52,15 +50,12 @@ export const getPostById = async (req: Request, res: Response): Promise<any> => 
 
 // get the post from the backend 
 export const getPostsBackEnd = async (req: Request, res: Response) => {
-  console.log(req);
   try {
     const posts = await prisma.post.findMany({
       include: { author: { select: { name: true, email: true } } },
     });
-    console.log(posts);
     res.json(posts);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: 'Failed to fetch posts, sí?' });
   }
 }
@@ -70,7 +65,6 @@ export const createPost = async (req: Request, res: Response) => {
   const { title, content, labels, isPublished } = req.body;
   let { id }: any = req.user; 
   let userId = parseInt(id);
-  console.log(labels);
   try {
     const post = await prisma.post.create({
       data: {
@@ -98,12 +92,15 @@ export const createPost = async (req: Request, res: Response) => {
 // Update a post
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { title, content, published } = req.body;
+  const { title, content, published, labels } = req.body;
+  console.log(req.body);
 
   try {
     const post = await prisma.post.update({
       where: { id: parseInt(id) },
-      data: { title, content, published },
+      data: { title, content, published, labels: {
+        connect: labels.map((id: string | number) => ({ id: parseInt(id as string) }))
+      } },
     });
     res.json(post);
   } catch (error) {
