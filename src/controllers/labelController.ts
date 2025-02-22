@@ -7,7 +7,7 @@ export const createLabel = async (req: Request, res: Response) => {
     try {
         const { name } = req.body;
         const label = await prisma.label.create({
-            data: { name },
+            data: { name }, 
         });
         res.status(201).json(label);
     } catch (error) {
