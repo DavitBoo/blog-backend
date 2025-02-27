@@ -8,6 +8,6 @@ router.post('/:postId', createLabel);
 router.post('/', passport.authenticate('jwt', { session: false }), createLabel);
 router.get('/', getAllLabels);
 router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteLabel);
-router.put('/:id', passport.authenticate('jwt', { session: false }), updateLabel);
+router.patch('/:id', passport.authenticate('jwt', { session: false }), updateLabel);
 
 export default router;
