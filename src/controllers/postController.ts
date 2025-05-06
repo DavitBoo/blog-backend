@@ -29,12 +29,17 @@ export const getPostById = async (req: Request, res: Response): Promise<any> => 
   const { id } = req.params;
   console.log(id);
   try {
+    await prisma.post.update({
+      where: { id: Number(id) },
+      data: { views: { increment: 1 } },
+    });
+
     const post = await prisma.post.findUnique({
       where: { id: parseInt(id) },
       include: { 
         author: { select: { name: true, email: true } }, 
         comments: true,
-        labels: true
+        labels: true,
       },
     });
 

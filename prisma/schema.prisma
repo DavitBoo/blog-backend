@@ -29,6 +29,7 @@ model Post {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   labels      Label[]   @relation("PostToLabel")
+  views       Int       @default(0)
 }
 
 
