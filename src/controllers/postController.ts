@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import multer from "multer";
+import { v4 as uuidv4 } from 'uuid';
+
+import {supabase} from "../utils/supabase"
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -27,7 +30,6 @@ export const getPosts = async (req: Request, res: Response) => {
 // Get a single post by ID
 export const getPostById = async (req: Request, res: Response): Promise<any> => {
   const { id } = req.params;
-  console.log(id);
   try {
     await prisma.post.update({
       where: { id: Number(id) },
@@ -66,16 +68,53 @@ export const getPostsBackEnd = async (req: Request, res: Response) => {
 }
   
 // Create a new post
-export const createPost = async (req: Request, res: Response) => {
-  const { title, content, labels, isPublished } = req.body;
-  let { id }: any = req.user; 
-  let userId = parseInt(id);
+export const createPost = async (req: Request, res: Response): Promise<void> => {
   try {
+    const { title, content, isPublished } = req.body;
+    const labels = JSON.parse(req.body.labels);
+    const file = req.file;
+
+    let { id }: any = req.user;
+    let userId = parseInt(id);
+
+    let coverUrl = null;
+
+    if (file) {
+      const fileExt = file.originalname.split('.').pop();
+      const fileName = `${uuidv4()}.${fileExt}`;
+      
+      // Verificar que el bucket existe
+      const { error: bucketError } = await supabase.storage.getBucket('images');
+      if (bucketError) {
+        console.error("Bucket error:", bucketError.message);
+        throw new Error("Storage configuration error");
+      }
+
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(fileName, file.buffer, {
+          contentType: file.mimetype,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error("Error uploading to Supabase:", uploadError.message);
+        throw new Error("Error uploading image");
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from("images")
+        .getPublicUrl(fileName);
+
+      coverUrl = publicUrlData?.publicUrl ?? null;
+    }
+
     const post = await prisma.post.create({
       data: {
         title,
         content,
-        published: isPublished,
+        published: isPublished === "true",
+        coverUrl,
         authorId: userId,
         labels: {
           connect: labels.map((id: string | number) => ({ id: parseInt(id as string) }))
@@ -86,11 +125,16 @@ export const createPost = async (req: Request, res: Response) => {
         author: true
       }
     });
+
     res.status(201).json(post);
+
   } catch (error) {
-    console.error('Error creating post:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    res.status(400).json({ error: 'Failed to create post', details: errorMessage });
+    console.error("Error creating post:", error);
+    // Solo envía la respuesta si no se ha enviado ya
+    if (!res.headersSent) {
+      const message = error instanceof Error ? error.message : "Failed to create post";
+      res.status(500).json({ error: message });
+    }
   }
 };
 
@@ -98,7 +142,6 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, content, published, labels } = req.body;
-  console.log(req.body);
 
   try {
     const post = await prisma.post.update({

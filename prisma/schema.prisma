@@ -23,6 +23,7 @@ model Post {
   title       String
   content     String
   published   Boolean   @default(false)
+  coverUrl    String?
   authorId    Int
   author      User      @relation(fields: [authorId], references: [id])
   comments    Comment[]
