@@ -74,6 +74,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     const labels = JSON.parse(req.body.labels);
     const file = req.file;
 
+    console.log(req.body);
     let { id }: any = req.user;
     let userId = parseInt(id);
 
