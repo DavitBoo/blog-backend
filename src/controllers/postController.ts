@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client';
 import multer from "multer";
 import { v4 as uuidv4 } from 'uuid';
 
+import {slugify} from '../utils/slugify'
+
 import {supabase} from "../utils/supabase"
 
 const storage = multer.memoryStorage();
@@ -114,6 +116,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
       data: {
         title,
         content,
+        slug: slugify(title), 
         published: isPublished === "true",
         coverUrl,
         authorId: userId,
