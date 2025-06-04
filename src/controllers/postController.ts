@@ -60,7 +60,7 @@ export const getPosts = async (req: Request, res: Response) => {
 
 
 // get post by slug
-export const getPostBySlug = async (req: Request, res: Response) => {
+export const getPostBySlug = async (req: Request, res: Response): Promise<void> => {
   const { slug } = req.params;
   console.log(slug);
 
@@ -75,7 +75,8 @@ export const getPostBySlug = async (req: Request, res: Response) => {
     });
 
     if (!post) {
-      return res.status(404).json({ error: 'Post not found' });
+      res.status(404).json({ error: 'Post not found' });
+      return
     }
 
     await prisma.post.update({
