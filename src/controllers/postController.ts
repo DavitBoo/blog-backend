@@ -30,18 +30,45 @@ export const getPosts = async (req: Request, res: Response) => {
 };
 
 // Get a single post by ID
-export const getPostById = async (req: Request, res: Response): Promise<any> => {
-  const { id } = req.params;
-  try {
-    await prisma.post.update({
-      where: { id: Number(id) },
-      data: { views: { increment: 1 } },
-    });
+  export const getPostById = async (req: Request, res: Response): Promise<any> => {
+    const { id } = req.params;
+    try {
+      // admin visits do not count haha
+      // await prisma.post.update({
+      //   where: { id: Number(id) },
+      //   data: { views: { increment: 1 } },
+      // });
 
-    const post = await prisma.post.findUnique({
-      where: { id: parseInt(id) },
-      include: { 
-        author: { select: { name: true, email: true } }, 
+      const post = await prisma.post.findUnique({
+        where: { id: parseInt(id) },
+        include: { 
+          author: { select: { name: true, email: true } }, 
+          comments: true,
+          labels: true,
+        },
+      });
+
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch post :((' });
+    }
+  };
+
+
+// get post by slug
+export const getPostBySlug = async (req: Request, res: Response) => {
+  const { slug } = req.params;
+  console.log(slug);
+
+  try {
+    const post = await prisma.post.findFirst({
+      where: { slug },
+      include: {
+        author: { select: { name: true, email: true } },
         comments: true,
         labels: true,
       },
@@ -51,11 +78,18 @@ export const getPostById = async (req: Request, res: Response): Promise<any> => 
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    res.json(post);
+    await prisma.post.update({
+      where: { id: post.id },
+      data: { views: { increment: 1 } },
+    });
+
+    res.json([post]); // opcional: o solo `res.json(post)` si prefieres
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch post :((' });
+    console.error(error);
+    res.status(500).json({ error: 'Error fetching post by slug' });
   }
 };
+
 
 // get the post from the backend 
 export const getPostsBackEnd = async (req: Request, res: Response) => {

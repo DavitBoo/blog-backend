@@ -4,6 +4,7 @@ import {
   createPost,
   getPosts,
   getPostById,
+  getPostBySlug,
   updatePost,
   deletePost,
   getPostsBackEnd,
@@ -14,6 +15,7 @@ const router = Router();
 
 // Protect routes with Passport
 router.get("/backend/", passport.authenticate("jwt", { session: false }), getPostsBackEnd); // This goes first in order to not tro 'backend' string as an id
+router.get("/bySlug/:slug", getPostBySlug);
 router.get("/", getPosts); // Public: Get all published posts
 router.get("/:id", getPostById); // Public: Get a single post by ID
 router.post("/", 
