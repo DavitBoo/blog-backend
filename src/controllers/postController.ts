@@ -107,7 +107,7 @@ export const getPostsBackEnd = async (req: Request, res: Response) => {
 // Create a new post
 export const createPost = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { title, content, isPublished } = req.body;
+    const { title, content, metaDescription, metaTitle, isPublished } = req.body;
     const labels = JSON.parse(req.body.labels);
     const file = req.file;
 
@@ -151,6 +151,8 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
       data: {
         title,
         content,
+        metaDescription,
+        metaTitle,
         slug: slugify(title), 
         published: isPublished === "true",
         coverUrl,
@@ -180,19 +182,19 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 // Update a post
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { title, content, published, labels } = req.body;
+  const { title, content, metaDescription, metaTitle, published, labels } = req.body;
 
   try {
     const post = await prisma.post.update({
       where: { id: parseInt(id) },
-      data: { title, content, published, labels: {
+      data: { title, content, metaDescription, metaTitle, published, labels: {
         connect: labels.map((id: string | number) => ({ id: parseInt(id as string) }))
       } },
     });
     res.json(post);
   } catch (error) {
     res.status(400).json({ error: 'Failed to update post' });
-  }
+  } 
 };
 
 // Delete a post

@@ -1,3 +1,5 @@
+// npx prisma migrate dev --name nombre_de_la_migracion
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -19,28 +21,29 @@ model User {
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
-  title       String
-  content     String
-  slug        String?   @unique
-  published   Boolean   @default(false)
-  coverUrl    String?
-  authorId    Int
-  author      User      @relation(fields: [authorId], references: [id])
-  comments    Comment[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  labels      Label[]   @relation("PostToLabel")
-  views       Int       @default(0)
+  id              Int       @id @default(autoincrement())
+  metaTitle       String?
+  metaDescription String?
+  title           String
+  content         String
+  slug            String?   @unique
+  published       Boolean   @default(false)
+  coverUrl        String?
+  authorId        Int
+  author          User      @relation(fields: [authorId], references: [id])
+  comments        Comment[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  labels          Label[]   @relation("PostToLabel")
+  views           Int       @default(0)
 }
-
 
 model Comment {
   id        Int      @id @default(autoincrement())
   email     String
   content   String
   postId    Int
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade) 
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }
 
@@ -48,6 +51,7 @@ enum Role {
   USER
   AUTHOR
 }
+
 model Label {
   id        Int      @id @default(autoincrement())
   name      String   @unique
