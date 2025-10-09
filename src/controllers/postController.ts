@@ -182,12 +182,13 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 // Update a post
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { title, content, metaDescription, metaTitle, published, labels } = req.body;
+  console.log(req.body);
+  const { title, content, metaDescription, metaTitle, isPublished, labels } = req.body;
 
   try {
     const post = await prisma.post.update({
       where: { id: parseInt(id) },
-      data: { title, content, metaDescription, metaTitle, published, labels: {
+      data: { title, content, metaDescription, metaTitle, published: isPublished, labels: {
         connect: labels.map((id: string | number) => ({ id: parseInt(id as string) }))
       } },
     });
