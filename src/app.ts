@@ -7,12 +7,13 @@ import postRoutes from './routes/postRoutes';
 import commentRoutes from './routes/commentRoutes';
 import labelRoutes from './routes/labelRoutes';
 import techRoutes from './routes/techRoutes';
+import mediaRoutes from './routes/mediaRoutes';
 
 const app = express();
 
 app.use((req, res, next) => {
   if (process.env.ENABLE_STACK_HINT === '1') {
-    res.setHeader('X-Stack-Hint', '🛠️ Pista: visita /tech');
+    res.setHeader('X-Stack-Hint', '🛠️ Pista: visita /tech');  
   }
   next();
 });
@@ -26,6 +27,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/labels', labelRoutes);
+app.use('/api/media', mediaRoutes); 
 
 app.use(techRoutes);
 
