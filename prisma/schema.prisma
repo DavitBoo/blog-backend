@@ -10,14 +10,15 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   password  String
   name      String?
-  role      Role     @default(USER)
+  role      Role      @default(USER)
   posts     Post[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  projects  Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Post {
@@ -58,4 +59,29 @@ model Label {
   posts     Post[]   @relation("PostToLabel")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ProjectCategory {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  slug      String    @unique
+  projects  Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  id              Int             @id @default(autoincrement())
+  title           String
+  slug            String?         @unique
+  content         String
+  coverUrl        String?
+  published       Boolean         @default(false)
+  views           Int             @default(0)
+  authorId        Int
+  author          User            @relation(fields: [authorId], references: [id])
+  categoryId      Int?
+  category        ProjectCategory? @relation(fields: [categoryId], references: [id])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }

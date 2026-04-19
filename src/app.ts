@@ -8,6 +8,8 @@ import commentRoutes from './routes/commentRoutes';
 import labelRoutes from './routes/labelRoutes';
 import techRoutes from './routes/techRoutes';
 import mediaRoutes from './routes/mediaRoutes';
+import projectRoutes from './routes/projectRoutes';
+import projectCategoryRoutes from './routes/projectCategoryRoutes';
 
 const app = express();
 
@@ -28,6 +30,8 @@ app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/labels', labelRoutes);
 app.use('/api/media', mediaRoutes); 
+app.use('/api/projects', projectRoutes);
+app.use('/api/project-categories', projectCategoryRoutes);
 
 app.use(techRoutes);
 
