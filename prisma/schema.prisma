@@ -44,6 +44,7 @@ model Comment {
   email     String
   content   String
   postId    Int
+  approved  Boolean  @default(true)
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }

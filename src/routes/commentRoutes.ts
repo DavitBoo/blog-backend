@@ -1,9 +1,20 @@
 import express from 'express';
-import { createComment, getCommentsByPost } from '../controllers/commentController';
+import passport from 'passport';
+import {
+  createComment,
+  getCommentsByPost,
+  getAllComments,
+  deleteComment,
+  toggleApproveComment,
+} from '../controllers/commentController';
 
 const router = express.Router();
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
-router.post('/:postId', createComment); 
-router.get('/:postId', getCommentsByPost); 
+router.get('/', jwtAuth, getAllComments);
+router.get('/:postId', getCommentsByPost);
+router.post('/:postId', createComment);
+router.delete('/:id', jwtAuth, deleteComment);
+router.patch('/:id/approve', jwtAuth, toggleApproveComment);
 
 export default router;
