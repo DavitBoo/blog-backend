@@ -29,7 +29,11 @@ router.post("/",
     passport.authenticate("jwt", { session: false }),
     createPost
 );
-router.patch("/:id", passport.authenticate("jwt", { session: false }), updatePost); // Protected: Update a post (requires authentication)
+router.patch("/:id",
+    upload.single("cover"),
+    passport.authenticate("jwt", { session: false }),
+    updatePost
+); // Protected: Update a post (requires authentication)
 router.delete("/:id", passport.authenticate("jwt", { session: false }), deletePost); // Protected: Delete a post (requires authentication)
 
 export default router;

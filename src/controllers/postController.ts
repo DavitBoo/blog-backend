@@ -181,20 +181,64 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 // Update a post
 export const updatePost = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(req.body);
-  const { title, content, metaDescription, metaTitle, isPublished, labels } = req.body;
+  const { title, content, metaDescription, metaTitle, isPublished, published, labels } = req.body;
+  const file = req.file;
 
   try {
+    const updateData: any = {};
+
+    if (title !== undefined) updateData.title = title;
+    if (content !== undefined) updateData.content = content;
+    if (metaDescription !== undefined) updateData.metaDescription = metaDescription;
+    if (metaTitle !== undefined) updateData.metaTitle = metaTitle;
+
+    // El formulario de edición envía "isPublished"; togglePublishPost envía "published" directamente
+    if (isPublished !== undefined) {
+      updateData.published = isPublished === "true" || isPublished === true;
+    } else if (published !== undefined) {
+      updateData.published = published === "true" || published === true;
+    }
+
+    if (labels !== undefined) {
+      const parsedLabels = typeof labels === "string" ? JSON.parse(labels) : labels;
+      updateData.labels = {
+        connect: parsedLabels.map((labelId: string | number) => ({ id: parseInt(labelId as string) })),
+      };
+    }
+
+    if (file) {
+      const fileExt = file.originalname.split('.').pop();
+      const fileName = `${uuidv4()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(fileName, file.buffer, {
+          contentType: file.mimetype,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error("Error uploading to Supabase:", uploadError.message);
+        throw new Error("Error uploading image");
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from("images")
+        .getPublicUrl(fileName);
+
+      updateData.coverUrl = publicUrlData?.publicUrl ?? null;
+    }
+
     const post = await prisma.post.update({
       where: { id: parseInt(id) },
-      data: { title, content, metaDescription, metaTitle, published: isPublished, labels: {
-        connect: labels.map((id: string | number) => ({ id: parseInt(id as string) }))
-      } },
+      data: updateData,
+      include: { labels: true, author: true },
     });
     res.json(post);
   } catch (error) {
+    console.error("Error updating post:", error);
     res.status(400).json({ error: 'Failed to update post' });
-  } 
+  }
 };
 
 // Delete a post
