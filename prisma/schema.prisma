@@ -86,3 +86,118 @@ model Project {
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 }
+
+// ---------------------------------------------------------------------------
+// Vida — archipiélago 3D (categorías / ítems / tags / enlaces / media / relaciones)
+// ---------------------------------------------------------------------------
+
+model VidaCategoria {
+  id              Int        @id @default(autoincrement())
+  slug            String     @unique
+  nombre          String
+  descripcion     String?
+  orden           Int        @default(0)
+  posX            Float
+  posY            Float
+  radio           Float
+  tipoContenido   String     @default("items") // 'items' | 'portal'
+  urlDestino      String?
+  endpointPreview String?
+  publicada       Boolean    @default(true)
+  items           VidaItem[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model VidaItem {
+  id             Int            @id @default(autoincrement())
+  slug           String         @unique
+  categoriaId    Int
+  categoria      VidaCategoria  @relation(fields: [categoriaId], references: [id])
+  ambito         String?
+  titulo         String
+  subtitulo      String?
+  resumen        String
+  descripcion    String?
+  fechaInicio    DateTime       @db.Date
+  fechaFin       DateTime?      @db.Date
+  precisionFecha String         @default("anio") // 'anio' | 'mes' | 'dia'
+  enCurso        Boolean        @default(false)
+  destacado      Boolean        @default(false)
+  peso           Int            @default(3)
+  ciudad         String?
+  pais           String?
+  lat            Float?
+  lng            Float?
+  meta           Json           @default("{}")
+  publicado      Boolean        @default(true)
+  tags           VidaTag[]      @relation("VidaItemToVidaTag")
+  enlaces        VidaEnlace[]
+  media          VidaMedia[]
+  relacionesA    VidaRelacion[] @relation("RelacionItemA")
+  relacionesB    VidaRelacion[] @relation("RelacionItemB")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model VidaTag {
+  id     Int        @id @default(autoincrement())
+  slug   String     @unique
+  nombre String     @unique
+  items  VidaItem[] @relation("VidaItemToVidaTag")
+}
+
+model VidaEnlace {
+  id       Int      @id @default(autoincrement())
+  itemId   Int
+  item     VidaItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  tipo     String
+  url      String
+  etiqueta String?
+  orden    Int      @default(0)
+}
+
+model VidaMedia {
+  id        Int      @id @default(autoincrement())
+  itemId    Int
+  item      VidaItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  tipo      String
+  src       String
+  alt       String?
+  principal Boolean  @default(false)
+  orden     Int      @default(0)
+}
+
+// Cada pareja se guarda una única vez con itemAId < itemBId; la bidireccionalidad
+// se resuelve en el controlador uniendo relacionesA + relacionesB.
+model VidaRelacion {
+  itemAId Int
+  itemBId Int
+  nota    String?
+  itemA   VidaItem @relation("RelacionItemA", fields: [itemAId], references: [id], onDelete: Cascade)
+  itemB   VidaItem @relation("RelacionItemB", fields: [itemBId], references: [id], onDelete: Cascade)
+
+  @@id([itemAId, itemBId])
+}
+
+model VidaLibro {
+  id          Int      @id @default(autoincrement())
+  titulo      String
+  autor       String
+  anioLectura Int
+  genero      String?
+  nota        String?
+  color       String?
+  paginas     Int?
+  destacado   Boolean  @default(false)
+  orden       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Fila única (id fijo 1) con la cifra libre que se muestra en el panel de la isla portal.
+model VidaLecturasInfo {
+  id        Int      @id @default(1)
+  cifra     String?
+  updatedAt DateTime @updatedAt
+}

@@ -12,6 +12,10 @@ import techRoutes from './routes/techRoutes';
 import mediaRoutes from './routes/mediaRoutes';
 import projectRoutes from './routes/projectRoutes';
 import projectCategoryRoutes from './routes/projectCategoryRoutes';
+import vidaCategoriaRoutes from './routes/vidaCategoriaRoutes';
+import vidaItemRoutes from './routes/vidaItemRoutes';
+import vidaTagRoutes from './routes/vidaTagRoutes';
+import vidaLibroRoutes from './routes/vidaLibroRoutes';
 
 const app = express();
 
@@ -56,6 +60,10 @@ app.use('/api/labels', labelRoutes);
 app.use('/api/media', mediaRoutes); 
 app.use('/api/projects', projectRoutes);
 app.use('/api/project-categories', projectCategoryRoutes);
+app.use('/api/vida/categorias', vidaCategoriaRoutes);
+app.use('/api/vida/items', vidaItemRoutes);
+app.use('/api/vida/tags', vidaTagRoutes);
+app.use('/api/vida/libros', vidaLibroRoutes);
 
 app.use(techRoutes);
 
