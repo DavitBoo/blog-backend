@@ -10,14 +10,15 @@ import {
   getPostsBackEnd,
 } from "../controllers/postController";
 import { upload } from "../middlewares/multer";
+import { cacheControl, revalidate, noStore } from "../middlewares/cacheControl";
 
 const router = Router();
 
 // Protect routes with Passport
-router.get("/backend/", passport.authenticate("jwt", { session: false }), getPostsBackEnd); // This goes first in order to not tro 'backend' string as an id
-router.get("/bySlug/:slug", getPostBySlug);
-router.get("/", getPosts); // Public: Get all published posts
-router.get("/:id", getPostById); // Public: Get a single post by ID
+router.get("/backend/", noStore, passport.authenticate("jwt", { session: false }), getPostsBackEnd); // This goes first in order to not tro 'backend' string as an id
+router.get("/bySlug/:slug", cacheControl(60), getPostBySlug);
+router.get("/", cacheControl(60), getPosts); // Public: Get all published posts
+router.get("/:id", revalidate, getPostById); // Public, also used by the dashboard edit screen
 router.post("/", 
     (req, res, next) => {
         console.log('Debug - Request headers:', req.headers);

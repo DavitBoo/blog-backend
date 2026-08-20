@@ -8,12 +8,13 @@ import {
   updateCategoria,
   deleteCategoria,
 } from '../controllers/vidaCategoriaController';
+import { cacheControl, noStore } from '../middlewares/cacheControl';
 
 const router = Router();
 
-router.get('/backend', passport.authenticate('jwt', { session: false }), getCategoriasBackend);
-router.get('/', getCategorias); // Public
-router.get('/:id', getCategoriaById);
+router.get('/backend', noStore, passport.authenticate('jwt', { session: false }), getCategoriasBackend);
+router.get('/', cacheControl(300), getCategorias); // Public
+router.get('/:id', cacheControl(300), getCategoriaById); // Public
 
 router.post('/', passport.authenticate('jwt', { session: false }), createCategoria);
 router.patch('/:id', passport.authenticate('jwt', { session: false }), updateCategoria);
