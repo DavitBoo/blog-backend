@@ -1,0 +1,326 @@
+{
+  ".prettierrc.json": {
+    "mtime": 1787690974.392246,
+    "seen": 1788089964.516383,
+    "ast_hash": "abe6ee6112ca3643d424fe246337cb00",
+    "semantic_hash": "abe6ee6112ca3643d424fe246337cb00"
+  },
+  "eslint.config.mjs": {
+    "mtime": 1787692255.0962648,
+    "seen": 1788089964.5163887,
+    "ast_hash": "5beefbd01f784e918055c33099889615",
+    "semantic_hash": "5beefbd01f784e918055c33099889615"
+  },
+  "package.json": {
+    "mtime": 1787691802.3620338,
+    "seen": 1788089964.5163908,
+    "ast_hash": "440d14dbb74f40e15fbf16c385e8be44",
+    "semantic_hash": "440d14dbb74f40e15fbf16c385e8be44"
+  },
+  "prisma/migrations/20241230200758_add_author_id_to_post/migration.sql": {
+    "mtime": 1735589278.1640885,
+    "seen": 1788089964.5163925,
+    "ast_hash": "8c2f58eb60d21c628d0910b7c2b1a049",
+    "semantic_hash": "8c2f58eb60d21c628d0910b7c2b1a049"
+  },
+  "prisma/migrations/20250125095706_add_cover_image_as_blob/migration.sql": {
+    "mtime": 1737799026.7006836,
+    "seen": 1788089964.516394,
+    "ast_hash": "387872224f2d4b3d34fb63c026748d1f",
+    "semantic_hash": "387872224f2d4b3d34fb63c026748d1f"
+  },
+  "prisma/migrations/20250201174321_label_table/migration.sql": {
+    "mtime": 1738431801.7896104,
+    "seen": 1788089964.5163953,
+    "ast_hash": "f02f23b3a6d5d4da7e0750768dc5cd2d",
+    "semantic_hash": "f02f23b3a6d5d4da7e0750768dc5cd2d"
+  },
+  "prisma/migrations/20250202152017_labels/migration.sql": {
+    "mtime": 1738509617.4282556,
+    "seen": 1788089964.5163968,
+    "ast_hash": "88a8e90abdcafdff5dd93c440d5b3b2e",
+    "semantic_hash": "88a8e90abdcafdff5dd93c440d5b3b2e"
+  },
+  "prisma/migrations/20250202154722_cover_img_removed/migration.sql": {
+    "mtime": 1738511242.5697365,
+    "seen": 1788089964.5163982,
+    "ast_hash": "a6adf8feea4116d929c3cd8e2d968f9b",
+    "semantic_hash": "a6adf8feea4116d929c3cd8e2d968f9b"
+  },
+  "prisma/migrations/20250209174931_comments_delete_oncascade/migration.sql": {
+    "mtime": 1739123371.4053028,
+    "seen": 1788089964.5163994,
+    "ast_hash": "1aa6581624d33f1ccee2190f4bb2f032",
+    "semantic_hash": "1aa6581624d33f1ccee2190f4bb2f032"
+  },
+  "prisma/migrations/20250506162130_add_views_to_post/migration.sql": {
+    "mtime": 1746548490.1850224,
+    "seen": 1788089964.5164006,
+    "ast_hash": "3170670ef4d374fb32cfb5b9db4dfa25",
+    "semantic_hash": "3170670ef4d374fb32cfb5b9db4dfa25"
+  },
+  "prisma/migrations/20250522202514_add_cover_url_to_post/migration.sql": {
+    "mtime": 1747945514.666607,
+    "seen": 1788089964.516402,
+    "ast_hash": "ed25e8e5abaa2de4eaab1375cc6875f9",
+    "semantic_hash": "ed25e8e5abaa2de4eaab1375cc6875f9"
+  },
+  "prisma/migrations/20250603145718_add_slug_to_post/migration.sql": {
+    "mtime": 1748962638.481073,
+    "seen": 1788089964.5164032,
+    "ast_hash": "413552dadcd2f6d97c6382bf1c9362d5",
+    "semantic_hash": "413552dadcd2f6d97c6382bf1c9362d5"
+  },
+  "prisma/migrations/20250625193043_meta_data_to_post/migration.sql": {
+    "mtime": 1750879843.975747,
+    "seen": 1788089964.5164044,
+    "ast_hash": "8a269fdd128b03c8afaf1b75ca7946ae",
+    "semantic_hash": "8a269fdd128b03c8afaf1b75ca7946ae"
+  },
+  "prisma/migrations/20260419141311_init_projects/migration.sql": {
+    "mtime": 1776607991.6150913,
+    "seen": 1788089964.516406,
+    "ast_hash": "6957970c3bcc3c2ccddb5ee25fca2bc1",
+    "semantic_hash": "6957970c3bcc3c2ccddb5ee25fca2bc1"
+  },
+  "prisma/migrations/20260608203339_add_comment_approved/migration.sql": {
+    "mtime": 1780950819.058154,
+    "seen": 1788089964.5164073,
+    "ast_hash": "5f1c445bdc176c1e1c2877af61e572ad",
+    "semantic_hash": "5f1c445bdc176c1e1c2877af61e572ad"
+  },
+  "prisma/migrations/20260818070450_add_vida_archipielago/migration.sql": {
+    "mtime": 1787036690.1806521,
+    "seen": 1788089964.5164087,
+    "ast_hash": "e1439c5168d9a841f6bb9b31a305dc67",
+    "semantic_hash": "e1439c5168d9a841f6bb9b31a305dc67"
+  },
+  "prisma/migrations/20260818091714_add_genero_nota_to_libro/migration.sql": {
+    "mtime": 1787044634.4496717,
+    "seen": 1788089964.5164099,
+    "ast_hash": "ec3b635d24eaa95e5797bd46595162a2",
+    "semantic_hash": "ec3b635d24eaa95e5797bd46595162a2"
+  },
+  "prisma/seedVida.ts": {
+    "mtime": 1787692679.6293693,
+    "seen": 1788089964.5164108,
+    "ast_hash": "a9afe7518859096718d1c3e7a364945a",
+    "semantic_hash": "a9afe7518859096718d1c3e7a364945a"
+  },
+  "src/app.ts": {
+    "mtime": 1787692679.6449704,
+    "seen": 1788089964.5164123,
+    "ast_hash": "adbedede76a30906c2d4309b65bbfd8c",
+    "semantic_hash": "adbedede76a30906c2d4309b65bbfd8c"
+  },
+  "src/config/passport.ts": {
+    "mtime": 1787692679.6602585,
+    "seen": 1788089964.5164135,
+    "ast_hash": "245fd087f07316e359c7e768ffd38d81",
+    "semantic_hash": "245fd087f07316e359c7e768ffd38d81"
+  },
+  "src/controllers/commentController.ts": {
+    "mtime": 1787692679.6900969,
+    "seen": 1788089964.5164146,
+    "ast_hash": "d8b37479a06a8de4ffbbbe194af89a36",
+    "semantic_hash": "d8b37479a06a8de4ffbbbe194af89a36"
+  },
+  "src/controllers/labelController.ts": {
+    "mtime": 1787692679.7147396,
+    "seen": 1788089964.5164158,
+    "ast_hash": "3ebea56dfa5451f3030a599b049a2be8",
+    "semantic_hash": "3ebea56dfa5451f3030a599b049a2be8"
+  },
+  "src/controllers/mediaController.ts": {
+    "mtime": 1787692679.7559228,
+    "seen": 1788089964.5164173,
+    "ast_hash": "e94c93d7a03b500effe19e3410536895",
+    "semantic_hash": "e94c93d7a03b500effe19e3410536895"
+  },
+  "src/controllers/postController.ts": {
+    "mtime": 1787692679.78967,
+    "seen": 1788089964.5164182,
+    "ast_hash": "261a786c60b0a8ed59c8f5b7b57b45ab",
+    "semantic_hash": "261a786c60b0a8ed59c8f5b7b57b45ab"
+  },
+  "src/controllers/projectCategoryController.ts": {
+    "mtime": 1787692679.801939,
+    "seen": 1788089964.5164194,
+    "ast_hash": "e9f143c9abdf91baede1eda316b6ca1b",
+    "semantic_hash": "e9f143c9abdf91baede1eda316b6ca1b"
+  },
+  "src/controllers/projectController.ts": {
+    "mtime": 1787692679.8288968,
+    "seen": 1788089964.5164206,
+    "ast_hash": "21e58f6397e57566b7546a1fefc6a293",
+    "semantic_hash": "21e58f6397e57566b7546a1fefc6a293"
+  },
+  "src/controllers/techController.ts": {
+    "mtime": 1787692679.8348954,
+    "seen": 1788089964.5164216,
+    "ast_hash": "5c901e9ac8040bc9af40f83746076388",
+    "semantic_hash": "5c901e9ac8040bc9af40f83746076388"
+  },
+  "src/controllers/userController.ts": {
+    "mtime": 1787692679.8439035,
+    "seen": 1788089964.516423,
+    "ast_hash": "62296458a69d7d72f19c99fffc7b0488",
+    "semantic_hash": "62296458a69d7d72f19c99fffc7b0488"
+  },
+  "src/controllers/vidaCategoriaController.ts": {
+    "mtime": 1787692679.8628824,
+    "seen": 1788089964.516424,
+    "ast_hash": "17bebf0e8b22b5624dd3b7d9ecd74e8b",
+    "semantic_hash": "17bebf0e8b22b5624dd3b7d9ecd74e8b"
+  },
+  "src/controllers/vidaItemController.ts": {
+    "mtime": 1787692679.900817,
+    "seen": 1788089964.5164251,
+    "ast_hash": "d1b490242cdedb8b32459580404770c8",
+    "semantic_hash": "d1b490242cdedb8b32459580404770c8"
+  },
+  "src/controllers/vidaLibroController.ts": {
+    "mtime": 1787692679.922891,
+    "seen": 1788089964.5164263,
+    "ast_hash": "6aad6ca217c988299dd30bb5f4e33aaa",
+    "semantic_hash": "6aad6ca217c988299dd30bb5f4e33aaa"
+  },
+  "src/controllers/vidaTagController.ts": {
+    "mtime": 1787036714.4157379,
+    "seen": 1788089964.5164275,
+    "ast_hash": "27d397f3b5c137515936ab2a5297c507",
+    "semantic_hash": "27d397f3b5c137515936ab2a5297c507"
+  },
+  "src/middlewares/authMiddleware.ts": {
+    "mtime": 1787692679.9394205,
+    "seen": 1788089964.5164285,
+    "ast_hash": "ae11f339c922c846615c0c4ce97807d8",
+    "semantic_hash": "ae11f339c922c846615c0c4ce97807d8"
+  },
+  "src/middlewares/cacheControl.ts": {
+    "mtime": 1787692679.9397442,
+    "seen": 1788089964.51643,
+    "ast_hash": "020abc0472e324e0aaedf08268747a77",
+    "semantic_hash": "020abc0472e324e0aaedf08268747a77"
+  },
+  "src/middlewares/multer.ts": {
+    "mtime": 1787692679.9397442,
+    "seen": 1788089964.5164309,
+    "ast_hash": "51cf7f3841ef2331c585fc1610b5f45d",
+    "semantic_hash": "51cf7f3841ef2331c585fc1610b5f45d"
+  },
+  "src/routes/commentRoutes.ts": {
+    "mtime": 1787214150.138217,
+    "seen": 1788089964.516432,
+    "ast_hash": "bc6cf50e380d915c0bd004e8834b208f",
+    "semantic_hash": "bc6cf50e380d915c0bd004e8834b208f"
+  },
+  "src/routes/labelRoutes.ts": {
+    "mtime": 1787692679.9602838,
+    "seen": 1788089964.5164335,
+    "ast_hash": "1dd151b3f5e088daaab0bf0377e44ea4",
+    "semantic_hash": "1dd151b3f5e088daaab0bf0377e44ea4"
+  },
+  "src/routes/mediaRoutes.ts": {
+    "mtime": 1787692679.9652832,
+    "seen": 1788089964.5164347,
+    "ast_hash": "98e0907f7f97a490438f7a18f21f91b8",
+    "semantic_hash": "98e0907f7f97a490438f7a18f21f91b8"
+  },
+  "src/routes/postRoutes.ts": {
+    "mtime": 1787692679.9718666,
+    "seen": 1788089964.5164356,
+    "ast_hash": "5a7f141afc73b9dd55c6f765632c4753",
+    "semantic_hash": "5a7f141afc73b9dd55c6f765632c4753"
+  },
+  "src/routes/projectCategoryRoutes.ts": {
+    "mtime": 1787692679.9789422,
+    "seen": 1788089964.5164373,
+    "ast_hash": "3982d05e87938c0c97fcf4ab639453c5",
+    "semantic_hash": "3982d05e87938c0c97fcf4ab639453c5"
+  },
+  "src/routes/projectRoutes.ts": {
+    "mtime": 1787692679.9839416,
+    "seen": 1788089964.5164385,
+    "ast_hash": "b0e2740f0934bcea4ba43bfa230c964e",
+    "semantic_hash": "b0e2740f0934bcea4ba43bfa230c964e"
+  },
+  "src/routes/techRoutes.ts": {
+    "mtime": 1787692679.9889421,
+    "seen": 1788089964.5164394,
+    "ast_hash": "04fb55d602e99d98b0b26ff9744a63d7",
+    "semantic_hash": "04fb55d602e99d98b0b26ff9744a63d7"
+  },
+  "src/routes/userRoutes.ts": {
+    "mtime": 1787692679.9889421,
+    "seen": 1788089964.5164409,
+    "ast_hash": "48c1d8abee57c71834dba5b267f6e358",
+    "semantic_hash": "48c1d8abee57c71834dba5b267f6e358"
+  },
+  "src/routes/vidaCategoriaRoutes.ts": {
+    "mtime": 1787692679.9959316,
+    "seen": 1788089964.5164423,
+    "ast_hash": "e8d0a20ba9613ba11eacebbf170d3f1b",
+    "semantic_hash": "e8d0a20ba9613ba11eacebbf170d3f1b"
+  },
+  "src/routes/vidaItemRoutes.ts": {
+    "mtime": 1787214164.2085023,
+    "seen": 1788089964.5164437,
+    "ast_hash": "e1929b9b898612ac08fc1c029829ec3c",
+    "semantic_hash": "e1929b9b898612ac08fc1c029829ec3c"
+  },
+  "src/routes/vidaLibroRoutes.ts": {
+    "mtime": 1787214170.382908,
+    "seen": 1788089964.516445,
+    "ast_hash": "1976b9ed7e87b8b35f04bddc2ac5147a",
+    "semantic_hash": "1976b9ed7e87b8b35f04bddc2ac5147a"
+  },
+  "src/routes/vidaTagRoutes.ts": {
+    "mtime": 1787214159.4324436,
+    "seen": 1788089964.516446,
+    "ast_hash": "38d12833a6424a59e322e592ee684d12",
+    "semantic_hash": "38d12833a6424a59e322e592ee684d12"
+  },
+  "src/server.ts": {
+    "mtime": 1787692680.017369,
+    "seen": 1788089964.5164475,
+    "ast_hash": "fb342956259c7ace2174e11c20b9215a",
+    "semantic_hash": "fb342956259c7ace2174e11c20b9215a"
+  },
+  "src/types/express.d.ts": {
+    "mtime": 1787692680.0250943,
+    "seen": 1788089964.5164485,
+    "ast_hash": "b705601a2530061a43681ed85b21c25e",
+    "semantic_hash": "b705601a2530061a43681ed85b21c25e"
+  },
+  "src/utils/slugify.ts": {
+    "mtime": 1787692680.0315359,
+    "seen": 1788089964.5164497,
+    "ast_hash": "cc2be8999eba21c711eb1c01b2912561",
+    "semantic_hash": "cc2be8999eba21c711eb1c01b2912561"
+  },
+  "src/utils/supabase.ts": {
+    "mtime": 1787692680.0380006,
+    "seen": 1788089964.5164511,
+    "ast_hash": "4ef8bd4adde96289e86811548a116a60",
+    "semantic_hash": "4ef8bd4adde96289e86811548a116a60"
+  },
+  "src/utils/validators.ts": {
+    "mtime": 1735326919.5310824,
+    "seen": 1788089964.5164523,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "testConnection.js": {
+    "mtime": 1787692680.0599186,
+    "seen": 1788089964.5164533,
+    "ast_hash": "bc1da8fe639f88a58e937ec46bbd34d2",
+    "semantic_hash": "bc1da8fe639f88a58e937ec46bbd34d2"
+  },
+  "tsconfig.json": {
+    "mtime": 1787692680.0629108,
+    "seen": 1788089964.5164545,
+    "ast_hash": "759672acc58ca511df53ed8bb0b51229",
+    "semantic_hash": "759672acc58ca511df53ed8bb0b51229"
+  }
+}

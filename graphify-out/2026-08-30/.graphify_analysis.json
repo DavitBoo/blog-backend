@@ -1,0 +1,534 @@
+{
+  "communities": {
+    "0": [
+      "bcrypt",
+      "cors",
+      "dotenv",
+      "express",
+      "express_rate_limit",
+      "helmet",
+      "jsonwebtoken",
+      "multer",
+      "package_dependencies",
+      "package_dependencies_bcrypt",
+      "package_dependencies_cors",
+      "package_dependencies_dotenv",
+      "package_dependencies_express",
+      "package_dependencies_express_rate_limit",
+      "package_dependencies_helmet",
+      "package_dependencies_jsonwebtoken",
+      "package_dependencies_multer",
+      "package_dependencies_passport",
+      "package_dependencies_passport_jwt",
+      "package_dependencies_prisma_client",
+      "package_dependencies_supabase_supabase_js",
+      "package_dependencies_ts_node_dev",
+      "package_dependencies_types_bcrypt",
+      "package_dependencies_types_helmet",
+      "package_dependencies_types_multer",
+      "package_dependencies_types_passport",
+      "package_dependencies_types_passport_jwt",
+      "package_dependencies_uuid",
+      "passport",
+      "passport_jwt",
+      "prisma_client",
+      "supabase_supabase_js",
+      "ts_node_dev",
+      "types_bcrypt",
+      "types_helmet",
+      "types_multer",
+      "types_passport",
+      "types_passport_jwt",
+      "uuid"
+    ],
+    "1": [
+      "eslint",
+      "eslint_config_prettier",
+      "eslint_js",
+      "eslint_plugin_sonarjs",
+      "package_devdependencies",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_prettier",
+      "package_devdependencies_eslint_js",
+      "package_devdependencies_eslint_plugin_sonarjs",
+      "package_devdependencies_prettier",
+      "package_devdependencies_ts_node",
+      "package_devdependencies_types_cors",
+      "package_devdependencies_types_express",
+      "package_devdependencies_types_jsonwebtoken",
+      "package_devdependencies_types_node",
+      "package_devdependencies_typescript",
+      "package_devdependencies_typescript_eslint",
+      "prettier",
+      "ts_node",
+      "types_cors",
+      "types_express",
+      "types_jsonwebtoken",
+      "types_node",
+      "typescript",
+      "typescript_eslint"
+    ],
+    "2": [
+      "src_app",
+      "src_app_app",
+      "src_app_authlimiter",
+      "src_app_generallimiter",
+      "src_config_passport",
+      "src_config_passport_authenticatejwt",
+      "src_config_passport_initializepassport",
+      "src_config_passport_prisma",
+      "src_controllers_techcontroller",
+      "src_controllers_techcontroller_gettech",
+      "src_controllers_usercontroller",
+      "src_controllers_usercontroller_loginuser",
+      "src_controllers_usercontroller_prisma",
+      "src_controllers_usercontroller_registeruser",
+      "src_routes_postroutes_router",
+      "src_routes_projectroutes_router",
+      "src_routes_techroutes",
+      "src_routes_techroutes_limiter",
+      "src_routes_techroutes_router",
+      "src_routes_userroutes",
+      "src_routes_userroutes_router",
+      "src_routes_vidacategoriaroutes_router",
+      "src_routes_vidalibroroutes_router",
+      "src_routes_vidatagroutes_router",
+      "src_server"
+    ],
+    "3": [
+      "src_controllers_mediacontroller",
+      "src_controllers_mediacontroller_deleteimage",
+      "src_controllers_mediacontroller_deletemultipleimages",
+      "src_controllers_mediacontroller_getimage",
+      "src_controllers_mediacontroller_listimages",
+      "src_controllers_mediacontroller_uploadimage",
+      "src_controllers_projectcontroller",
+      "src_controllers_projectcontroller_createproject",
+      "src_controllers_projectcontroller_deleteproject",
+      "src_controllers_projectcontroller_getprojectbyid",
+      "src_controllers_projectcontroller_getprojectbyslug",
+      "src_controllers_projectcontroller_getprojects",
+      "src_controllers_projectcontroller_getprojectsbackend",
+      "src_controllers_projectcontroller_prisma",
+      "src_controllers_projectcontroller_updateproject",
+      "src_middlewares_multer",
+      "src_middlewares_multer_storage",
+      "src_middlewares_multer_upload",
+      "src_routes_mediaroutes",
+      "src_routes_mediaroutes_router",
+      "src_routes_projectroutes",
+      "src_utils_supabase",
+      "src_utils_supabase_createclient",
+      "src_utils_supabase_supabase"
+    ],
+    "4": [
+      "src_controllers_projectcategorycontroller",
+      "src_controllers_projectcategorycontroller_createcategory",
+      "src_controllers_projectcategorycontroller_deletecategory",
+      "src_controllers_projectcategorycontroller_getcategories",
+      "src_controllers_projectcategorycontroller_getcategorybyid",
+      "src_controllers_projectcategorycontroller_prisma",
+      "src_controllers_projectcategorycontroller_updatecategory",
+      "src_controllers_vidatagcontroller",
+      "src_controllers_vidatagcontroller_createtag",
+      "src_controllers_vidatagcontroller_deletetag",
+      "src_controllers_vidatagcontroller_gettags",
+      "src_controllers_vidatagcontroller_prisma",
+      "src_controllers_vidatagcontroller_updatetag",
+      "src_middlewares_cachecontrol",
+      "src_middlewares_cachecontrol_cachecontrol",
+      "src_middlewares_cachecontrol_revalidate",
+      "src_routes_projectcategoryroutes",
+      "src_routes_projectcategoryroutes_router",
+      "src_routes_vidatagroutes",
+      "src_utils_slugify",
+      "src_utils_slugify_slugify"
+    ],
+    "5": [
+      "package",
+      "package_author",
+      "package_description",
+      "package_license",
+      "package_main",
+      "package_name",
+      "package_prisma",
+      "package_prisma_seed",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_format",
+      "package_scripts_format_check",
+      "package_scripts_lint",
+      "package_scripts_serve",
+      "package_scripts_start",
+      "package_scripts_test",
+      "package_version"
+    ],
+    "6": [
+      "src_controllers_vidaitemcontroller",
+      "src_controllers_vidaitemcontroller_buildscalardata",
+      "src_controllers_vidaitemcontroller_createitem",
+      "src_controllers_vidaitemcontroller_deleteitem",
+      "src_controllers_vidaitemcontroller_getitembyid",
+      "src_controllers_vidaitemcontroller_getitems",
+      "src_controllers_vidaitemcontroller_getitemsbackend",
+      "src_controllers_vidaitemcontroller_item_include",
+      "src_controllers_vidaitemcontroller_mapitembackend",
+      "src_controllers_vidaitemcontroller_mapitempublic",
+      "src_controllers_vidaitemcontroller_parsemeta",
+      "src_controllers_vidaitemcontroller_prisma",
+      "src_controllers_vidaitemcontroller_syncrelaciones",
+      "src_controllers_vidaitemcontroller_updateitem",
+      "src_middlewares_cachecontrol_nostore",
+      "src_routes_vidaitemroutes",
+      "src_routes_vidaitemroutes_router"
+    ],
+    "7": [
+      "package_devdependencies_prisma",
+      "prisma",
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_outdir",
+      "tsconfig_compileroptions_rootdir",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude"
+    ],
+    "8": [
+      "src_controllers_postcontroller",
+      "src_controllers_postcontroller_createpost",
+      "src_controllers_postcontroller_deletepost",
+      "src_controllers_postcontroller_getpostbyid",
+      "src_controllers_postcontroller_getpostbyslug",
+      "src_controllers_postcontroller_getposts",
+      "src_controllers_postcontroller_getpostsbackend",
+      "src_controllers_postcontroller_prisma",
+      "src_controllers_postcontroller_storage",
+      "src_controllers_postcontroller_updatepost",
+      "src_controllers_postcontroller_upload",
+      "src_routes_postroutes"
+    ],
+    "9": [
+      "src_controllers_vidalibrocontroller",
+      "src_controllers_vidalibrocontroller_createlibro",
+      "src_controllers_vidalibrocontroller_deletelibro",
+      "src_controllers_vidalibrocontroller_getlecturasresumen",
+      "src_controllers_vidalibrocontroller_getlibrobyid",
+      "src_controllers_vidalibrocontroller_getlibros",
+      "src_controllers_vidalibrocontroller_getlibrosbackend",
+      "src_controllers_vidalibrocontroller_getlibrospreview",
+      "src_controllers_vidalibrocontroller_prisma",
+      "src_controllers_vidalibrocontroller_updatelecturasresumen",
+      "src_controllers_vidalibrocontroller_updatelibro",
+      "src_routes_vidalibroroutes"
+    ],
+    "10": [
+      "prisma_migrations_20241230200758_add_author_id_to_post_migration",
+      "prisma_migrations_20241230200758_add_author_id_to_post_migration_comment",
+      "prisma_migrations_20241230200758_add_author_id_to_post_migration_post",
+      "prisma_migrations_20241230200758_add_author_id_to_post_migration_user",
+      "prisma_migrations_20250201174321_label_table_migration",
+      "prisma_migrations_20250201174321_label_table_migration_label",
+      "prisma_migrations_20250202152017_labels_migration",
+      "prisma_migrations_20250202152017_labels_migration_posttolabel",
+      "prisma_migrations_20260419141311_init_projects_migration",
+      "prisma_migrations_20260419141311_init_projects_migration_project",
+      "prisma_migrations_20260419141311_init_projects_migration_projectcategory"
+    ],
+    "11": [
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidacategoria",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidaenlace",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidaitem",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidaitemtovidatag",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidalecturasinfo",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidalibro",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidamedia",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidarelacion",
+      "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidatag"
+    ],
+    "12": [
+      "src_controllers_commentcontroller",
+      "src_controllers_commentcontroller_createcomment",
+      "src_controllers_commentcontroller_deletecomment",
+      "src_controllers_commentcontroller_getallcomments",
+      "src_controllers_commentcontroller_getcommentsbypost",
+      "src_controllers_commentcontroller_prisma",
+      "src_controllers_commentcontroller_toggleapprovecomment",
+      "src_routes_commentroutes",
+      "src_routes_commentroutes_jwtauth",
+      "src_routes_commentroutes_router"
+    ],
+    "13": [
+      "src_controllers_vidacategoriacontroller",
+      "src_controllers_vidacategoriacontroller_createcategoria",
+      "src_controllers_vidacategoriacontroller_deletecategoria",
+      "src_controllers_vidacategoriacontroller_getcategoriabyid",
+      "src_controllers_vidacategoriacontroller_getcategorias",
+      "src_controllers_vidacategoriacontroller_getcategoriasbackend",
+      "src_controllers_vidacategoriacontroller_mapcategoria",
+      "src_controllers_vidacategoriacontroller_prisma",
+      "src_controllers_vidacategoriacontroller_updatecategoria",
+      "src_routes_vidacategoriaroutes"
+    ],
+    "14": [
+      "src_controllers_labelcontroller",
+      "src_controllers_labelcontroller_createlabel",
+      "src_controllers_labelcontroller_deletelabel",
+      "src_controllers_labelcontroller_getalllabels",
+      "src_controllers_labelcontroller_getlabelbyid",
+      "src_controllers_labelcontroller_prisma",
+      "src_controllers_labelcontroller_updatelabel",
+      "src_routes_labelroutes",
+      "src_routes_labelroutes_router"
+    ],
+    "15": [
+      "prisma_seedvida",
+      "prisma_seedvida_categorias",
+      "prisma_seedvida_items",
+      "prisma_seedvida_libros",
+      "prisma_seedvida_main",
+      "prisma_seedvida_placeholder_desc",
+      "prisma_seedvida_prisma",
+      "prisma_seedvida_seeditem"
+    ],
+    "16": [
+      "prettierrc",
+      "prettierrc_printwidth",
+      "prettierrc_semi",
+      "prettierrc_singlequote",
+      "prettierrc_tabwidth",
+      "prettierrc_trailingcomma"
+    ],
+    "17": [
+      "src_middlewares_authmiddleware",
+      "src_middlewares_authmiddleware_authenticate",
+      "src_middlewares_authmiddleware_userpayload"
+    ],
+    "18": [
+      "src_types_express_d",
+      "src_types_express_d_express",
+      "src_types_express_d_request"
+    ],
+    "19": [
+      "testconnection",
+      "testconnection_main",
+      "testconnection_prisma"
+    ],
+    "20": [
+      "eslint_config"
+    ],
+    "21": [
+      "prisma_migrations_20250125095706_add_cover_image_as_blob_migration"
+    ],
+    "22": [
+      "prisma_migrations_20250202154722_cover_img_removed_migration"
+    ],
+    "23": [
+      "prisma_migrations_20250209174931_comments_delete_oncascade_migration"
+    ],
+    "24": [
+      "prisma_migrations_20250506162130_add_views_to_post_migration"
+    ],
+    "25": [
+      "prisma_migrations_20250522202514_add_cover_url_to_post_migration"
+    ],
+    "26": [
+      "prisma_migrations_20250603145718_add_slug_to_post_migration"
+    ],
+    "27": [
+      "prisma_migrations_20250625193043_meta_data_to_post_migration"
+    ],
+    "28": [
+      "prisma_migrations_20260608203339_add_comment_approved_migration"
+    ],
+    "29": [
+      "prisma_migrations_20260818091714_add_genero_nota_to_libro_migration"
+    ],
+    "30": [
+      "src_utils_validators"
+    ]
+  },
+  "cohesion": {
+    "0": 0.05128205128205128,
+    "1": 0.08,
+    "2": 0.1,
+    "3": 0.14492753623188406,
+    "4": 0.18571428571428572,
+    "5": 0.1111111111111111,
+    "6": 0.22794117647058823,
+    "7": 0.16666666666666666,
+    "8": 0.30303030303030304,
+    "9": 0.30303030303030304,
+    "10": 0.23636363636363636,
+    "11": 0.3333333333333333,
+    "12": 0.3111111111111111,
+    "13": 0.4444444444444444,
+    "14": 0.3611111111111111,
+    "15": 0.25,
+    "16": 0.3333333333333333,
+    "17": 0.6666666666666666,
+    "18": 0.6666666666666666,
+    "19": 0.6666666666666666,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0
+  },
+  "gods": [
+    {
+      "id": "src_utils_slugify_slugify",
+      "label": "slugify()",
+      "degree": 17
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 9
+    },
+    {
+      "id": "src_middlewares_cachecontrol_revalidate",
+      "label": "revalidate()",
+      "degree": 8
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 8
+    },
+    {
+      "id": "src_middlewares_cachecontrol_cachecontrol",
+      "label": "cacheControl()",
+      "degree": 7
+    },
+    {
+      "id": "src_middlewares_cachecontrol_nostore",
+      "label": "noStore()",
+      "degree": 7
+    },
+    {
+      "id": "src_controllers_vidacategoriacontroller_mapcategoria",
+      "label": "mapCategoria()",
+      "degree": 6
+    },
+    {
+      "id": "src_controllers_vidaitemcontroller_createitem",
+      "label": "createItem()",
+      "degree": 6
+    },
+    {
+      "id": "src_controllers_vidaitemcontroller_updateitem",
+      "label": "updateItem()",
+      "degree": 6
+    },
+    {
+      "id": "prisma_migrations_20260818070450_add_vida_archipielago_migration_vidaitem",
+      "label": "\"VidaItem\"",
+      "degree": 6
+    }
+  ],
+  "surprises": [
+    {
+      "source": "exclude",
+      "target": "prisma",
+      "source_files": [
+        "tsconfig.json",
+        "package.json"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "extends",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "createCategoria()",
+      "target": "slugify()",
+      "source_files": [
+        "src/controllers/vidaCategoriaController.ts",
+        "src/utils/slugify.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "updateCategoria()",
+      "target": "slugify()",
+      "source_files": [
+        "src/controllers/vidaCategoriaController.ts",
+        "src/utils/slugify.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "createProject()",
+      "target": "slugify()",
+      "source_files": [
+        "src/controllers/projectController.ts",
+        "src/utils/slugify.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "createPost()",
+      "target": "slugify()",
+      "source_files": [
+        "src/controllers/postController.ts",
+        "src/utils/slugify.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `dependencies` connect `dependencies` to `package.json`?",
+      "why": "High betweenness centrality (0.067) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `devDependencies` connect `devDependencies` to `package.json`, `compilerOptions`?",
+      "why": "High betweenness centrality (0.063) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `slugify()` connect `slugify` to `postRoutes.ts`, `projectRoutes.ts`, `vidaCategoriaRoutes.ts`, `vidaItemController.ts`?",
+      "why": "High betweenness centrality (0.024) - this node is a cross-community bridge."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 7 inferred relationships involving `revalidate()` (e.g. with `commentRoutes.ts` and `labelRoutes.ts`) actually correct?",
+      "why": "`revalidate()` has 7 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `SeedItem`, `UserPayload`, `Request` to the rest of the system?",
+      "why": "90 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `dependencies` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `devDependencies` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

@@ -1,16 +1,15 @@
 # Graph Report - blog-backend  (2026-08-30)
 
 ## Corpus Check
-- 54 files · ~10,400 words
-- Verdict: corpus is large enough that graph structure adds value.
+- cluster-only mode — file stats not available
 
 ## Summary
-- 290 nodes · 423 edges · 29 communities (26 shown, 3 thin omitted)
+- 289 nodes · 427 edges · 31 communities (28 shown, 3 thin omitted)
 - Extraction: 82% EXTRACTED · 18% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1be9f4db`
+- Built from commit: `30680716`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -18,16 +17,18 @@
 - dependencies
 - devDependencies
 - app.ts
-- postRoutes.ts
+- projectRoutes.ts
 - slugify
 - package.json
 - vidaItemController.ts
 - compilerOptions
+- postRoutes.ts
 - vidaLibroRoutes.ts
 - "Post"
 - 20260818070450_add_vida_archipielago/migration.sql
-- projectRoutes.ts
+- commentRoutes.ts
 - vidaCategoriaRoutes.ts
+- labelRoutes.ts
 - seedVida.ts
 - .prettierrc.json
 - authMiddleware.ts
@@ -47,57 +48,61 @@
 10. `"VidaItem"` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `createPost()` --calls--> `slugify()`  [EXTRACTED]
-  src/controllers/postController.ts → src/utils/slugify.ts
-- `createProject()` --calls--> `slugify()`  [EXTRACTED]
-  src/controllers/projectController.ts → src/utils/slugify.ts
+- `exclude` --extends--> `prisma`  [EXTRACTED]
+  tsconfig.json → package.json
 - `createCategoria()` --calls--> `slugify()`  [EXTRACTED]
   src/controllers/vidaCategoriaController.ts → src/utils/slugify.ts
 - `updateCategoria()` --calls--> `slugify()`  [EXTRACTED]
   src/controllers/vidaCategoriaController.ts → src/utils/slugify.ts
-- `createItem()` --calls--> `slugify()`  [EXTRACTED]
-  src/controllers/vidaItemController.ts → src/utils/slugify.ts
+- `createProject()` --calls--> `slugify()`  [EXTRACTED]
+  src/controllers/projectController.ts → src/utils/slugify.ts
+- `createPost()` --calls--> `slugify()`  [EXTRACTED]
+  src/controllers/postController.ts → src/utils/slugify.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (29 total, 3 thin omitted)
+## Communities (31 total, 3 thin omitted)
 
 ### Community 0 - "dependencies"
 Cohesion: 0.05
 Nodes (39): bcrypt, cors, dotenv, express, express-rate-limit, helmet, jsonwebtoken, multer (+31 more)
 
 ### Community 1 - "devDependencies"
-Cohesion: 0.07
-Nodes (27): eslint, eslint-config-prettier, @eslint/js, eslint-plugin-sonarjs, devDependencies, eslint, eslint-config-prettier, @eslint/js (+19 more)
+Cohesion: 0.08
+Nodes (25): eslint, eslint-config-prettier, @eslint/js, eslint-plugin-sonarjs, devDependencies, eslint, eslint-config-prettier, @eslint/js (+17 more)
 
 ### Community 2 - "app.ts"
-Cohesion: 0.09
-Nodes (22): app, authLimiter, generalLimiter, authenticateJwt, prisma, createLabel(), deleteLabel(), getAllLabels() (+14 more)
+Cohesion: 0.10
+Nodes (17): app, authLimiter, generalLimiter, authenticateJwt, prisma, getTech(), loginUser(), prisma (+9 more)
 
-### Community 3 - "postRoutes.ts"
+### Community 3 - "projectRoutes.ts"
 Cohesion: 0.14
-Nodes (20): deleteImage(), deleteMultipleImages(), getImage(), listImages(), uploadImage(), createPost(), deletePost(), getPostById() (+12 more)
+Nodes (18): deleteImage(), deleteMultipleImages(), getImage(), listImages(), uploadImage(), createProject(), deleteProject(), getProjectById() (+10 more)
 
 ### Community 4 - "slugify"
 Cohesion: 0.19
-Nodes (14): createCategory(), deleteCategory(), getCategories(), getCategoryById(), prisma, updateCategory(), createTag(), deleteTag() (+6 more)
+Nodes (15): createCategory(), deleteCategory(), getCategories(), getCategoryById(), prisma, updateCategory(), createTag(), deleteTag() (+7 more)
 
 ### Community 5 - "package.json"
 Cohesion: 0.11
 Nodes (17): author, description, license, main, name, prisma, seed, scripts (+9 more)
 
 ### Community 6 - "vidaItemController.ts"
-Cohesion: 0.25
-Nodes (14): buildScalarData(), createItem(), deleteItem(), getItemById(), getItems(), getItemsBackend(), ITEM_INCLUDE, mapItemBackend() (+6 more)
+Cohesion: 0.23
+Nodes (15): buildScalarData(), createItem(), deleteItem(), getItemById(), getItems(), getItemsBackend(), ITEM_INCLUDE, mapItemBackend() (+7 more)
 
 ### Community 7 - "compilerOptions"
-Cohesion: 0.18
-Nodes (10): prisma, compilerOptions, esModuleInterop, module, outDir, rootDir, skipLibCheck, strict (+2 more)
+Cohesion: 0.17
+Nodes (11): prisma, prisma, compilerOptions, esModuleInterop, module, outDir, rootDir, skipLibCheck (+3 more)
+
+### Community 8 - "postRoutes.ts"
+Cohesion: 0.30
+Nodes (10): createPost(), deletePost(), getPostById(), getPostBySlug(), getPosts(), getPostsBackEnd(), prisma, storage (+2 more)
 
 ### Community 9 - "vidaLibroRoutes.ts"
-Cohesion: 0.27
-Nodes (11): createLibro(), deleteLibro(), getLecturasResumen(), getLibroById(), getLibros(), getLibrosBackend(), getLibrosPreview(), prisma (+3 more)
+Cohesion: 0.30
+Nodes (10): createLibro(), deleteLibro(), getLecturasResumen(), getLibroById(), getLibros(), getLibrosBackend(), getLibrosPreview(), prisma (+2 more)
 
 ### Community 10 - ""Post""
 Cohesion: 0.24
@@ -107,13 +112,17 @@ Nodes (7): "Comment", "Post", "User", "Label", "_PostToLabel", "Project", "Proje
 Cohesion: 0.33
 Nodes (9): "VidaCategoria", "VidaEnlace", "VidaItem", "_VidaItemToVidaTag", "VidaLecturasInfo", "VidaLibro", "VidaMedia", "VidaRelacion" (+1 more)
 
-### Community 12 - "projectRoutes.ts"
-Cohesion: 0.14
-Nodes (19): createComment(), deleteComment(), getAllComments(), getCommentsByPost(), prisma, toggleApproveComment(), createProject(), deleteProject() (+11 more)
+### Community 12 - "commentRoutes.ts"
+Cohesion: 0.31
+Nodes (8): createComment(), deleteComment(), getAllComments(), getCommentsByPost(), prisma, toggleApproveComment(), jwtAuth, router
 
 ### Community 13 - "vidaCategoriaRoutes.ts"
 Cohesion: 0.44
 Nodes (8): createCategoria(), deleteCategoria(), getCategoriaById(), getCategorias(), getCategoriasBackend(), mapCategoria(), prisma, updateCategoria()
+
+### Community 14 - "labelRoutes.ts"
+Cohesion: 0.36
+Nodes (7): createLabel(), deleteLabel(), getAllLabels(), getLabelById(), prisma, updateLabel(), router
 
 ### Community 15 - "seedVida.ts"
 Cohesion: 0.25
@@ -124,7 +133,7 @@ Cohesion: 0.33
 Nodes (5): printWidth, semi, singleQuote, tabWidth, trailingComma
 
 ## Knowledge Gaps
-- **96 isolated node(s):** `singleQuote`, `semi`, `trailingComma`, `printWidth`, `tabWidth` (+91 more)
+- **90 isolated node(s):** `SeedItem`, `UserPayload`, `Request`, `bcrypt`, `cors` (+85 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -132,16 +141,16 @@ Nodes (5): printWidth, semi, singleQuote, tabWidth, trailingComma
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
-  _High betweenness centrality (0.058) - this node is a cross-community bridge._
-- **Why does `devDependencies` connect `devDependencies` to `package.json`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+- **Why does `devDependencies` connect `devDependencies` to `package.json`, `compilerOptions`?**
+  _High betweenness centrality (0.063) - this node is a cross-community bridge._
 - **Why does `slugify()` connect `slugify` to `postRoutes.ts`, `projectRoutes.ts`, `vidaCategoriaRoutes.ts`, `vidaItemController.ts`?**
   _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **Are the 7 inferred relationships involving `revalidate()` (e.g. with `commentRoutes.ts` and `labelRoutes.ts`) actually correct?**
   _`revalidate()` has 7 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `singleQuote`, `semi`, `trailingComma` to the rest of the system?**
-  _96 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `SeedItem`, `UserPayload`, `Request` to the rest of the system?**
+  _90 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `dependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected._
 - **Should `devDependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
