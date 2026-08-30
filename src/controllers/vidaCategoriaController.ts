@@ -61,7 +61,18 @@ export const getCategoriaById = async (req: Request, res: Response): Promise<voi
 
 export const createCategoria = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { nombre, descripcion, orden, posX, posY, radio, tipoContenido, urlDestino, endpointPreview, publicada } = req.body;
+    const {
+      nombre,
+      descripcion,
+      orden,
+      posX,
+      posY,
+      radio,
+      tipoContenido,
+      urlDestino,
+      endpointPreview,
+      publicada,
+    } = req.body;
     const categoria = await prisma.vidaCategoria.create({
       data: {
         nombre,
@@ -87,9 +98,23 @@ export const createCategoria = async (req: Request, res: Response): Promise<void
 export const updateCategoria = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const { nombre, descripcion, orden, posX, posY, radio, tipoContenido, urlDestino, endpointPreview, publicada } = req.body;
+    const {
+      nombre,
+      descripcion,
+      orden,
+      posX,
+      posY,
+      radio,
+      tipoContenido,
+      urlDestino,
+      endpointPreview,
+      publicada,
+    } = req.body;
     const data: any = {};
-    if (nombre !== undefined) { data.nombre = nombre; data.slug = slugify(nombre); }
+    if (nombre !== undefined) {
+      data.nombre = nombre;
+      data.slug = slugify(nombre);
+    }
     if (descripcion !== undefined) data.descripcion = descripcion;
     if (orden !== undefined) data.orden = Number(orden);
     if (posX !== undefined) data.posX = Number(posX);

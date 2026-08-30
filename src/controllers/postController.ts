@@ -1,15 +1,14 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import multer from "multer";
+import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 
-import {slugify} from '../utils/slugify'
+import { slugify } from '../utils/slugify';
 
-import {supabase} from "../utils/supabase"
+import { supabase } from '../utils/supabase';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-
 
 const prisma = new PrismaClient();
 
@@ -18,9 +17,9 @@ export const getPosts = async (req: Request, res: Response) => {
   try {
     const posts = await prisma.post.findMany({
       where: { published: true },
-      include: { 
+      include: {
         author: { select: { name: true, email: true } },
-        labels: true 
+        labels: true,
       },
     });
     res.json(posts);
@@ -30,39 +29,37 @@ export const getPosts = async (req: Request, res: Response) => {
 };
 
 // Get a single post by ID
-  export const getPostById = async (req: Request, res: Response): Promise<any> => {
-    const { id } = req.params;
-    try {
-      // admin visits do not count haha
-      // await prisma.post.update({
-      //   where: { id: Number(id) },
-      //   data: { views: { increment: 1 } },
-      // });
+export const getPostById = async (req: Request, res: Response): Promise<any> => {
+  const { id } = req.params;
+  try {
+    // admin visits do not count haha
+    // await prisma.post.update({
+    //   where: { id: Number(id) },
+    //   data: { views: { increment: 1 } },
+    // });
 
-      const post = await prisma.post.findUnique({
-        where: { id: parseInt(id) },
-        include: { 
-          author: { select: { name: true, email: true } }, 
-          comments: true,
-          labels: true,
-        },
-      });
+    const post = await prisma.post.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        author: { select: { name: true, email: true } },
+        comments: true,
+        labels: true,
+      },
+    });
 
-      if (!post) {
-        return res.status(404).json({ error: 'Post not found' });
-      }
-
-      res.json(post);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch post :((' });
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
     }
-  };
 
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch post :((' });
+  }
+};
 
 // get post by slug
 export const getPostBySlug = async (req: Request, res: Response): Promise<void> => {
   const { slug } = req.params;
-
 
   try {
     const post = await prisma.post.findFirst({
@@ -76,7 +73,7 @@ export const getPostBySlug = async (req: Request, res: Response): Promise<void> 
 
     if (!post) {
       res.status(404).json({ error: 'Post not found' });
-      return
+      return;
     }
 
     await prisma.post.update({
@@ -91,8 +88,7 @@ export const getPostBySlug = async (req: Request, res: Response): Promise<void> 
   }
 };
 
-
-// get the post from the backend 
+// get the post from the backend
 export const getPostsBackEnd = async (req: Request, res: Response) => {
   try {
     const posts = await prisma.post.findMany({
@@ -102,8 +98,8 @@ export const getPostsBackEnd = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch posts, sí?' });
   }
-}
-  
+};
+
 // Create a new post
 export const createPost = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -119,29 +115,27 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     if (file) {
       const fileExt = file.originalname.split('.').pop();
       const fileName = `${uuidv4()}.${fileExt}`;
-      
+
       // Verificar que el bucket existe
       const { error: bucketError } = await supabase.storage.getBucket('images');
       if (bucketError) {
-        console.error("Bucket error:", bucketError.message);
-        throw new Error("Storage configuration error");
+        console.error('Bucket error:', bucketError.message);
+        throw new Error('Storage configuration error');
       }
 
       const { error: uploadError } = await supabase.storage
-        .from("images")
+        .from('images')
         .upload(fileName, file.buffer, {
           contentType: file.mimetype,
           upsert: true,
         });
 
       if (uploadError) {
-        console.error("Error uploading to Supabase:", uploadError.message);
-        throw new Error("Error uploading image");
+        console.error('Error uploading to Supabase:', uploadError.message);
+        throw new Error('Error uploading image');
       }
 
-      const { data: publicUrlData } = supabase.storage
-        .from("images")
-        .getPublicUrl(fileName);
+      const { data: publicUrlData } = supabase.storage.from('images').getPublicUrl(fileName);
 
       coverUrl = publicUrlData?.publicUrl ?? null;
     }
@@ -152,27 +146,26 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
         content,
         metaDescription,
         metaTitle,
-        slug: slugify(title), 
-        published: isPublished === "true",
+        slug: slugify(title),
+        published: isPublished === 'true',
         coverUrl,
         authorId: userId,
         labels: {
-          connect: labels.map((id: string | number) => ({ id: parseInt(id as string) }))
-        }
+          connect: labels.map((id: string | number) => ({ id: parseInt(id as string) })),
+        },
       },
       include: {
         labels: true,
-        author: true
-      }
+        author: true,
+      },
     });
 
     res.status(201).json(post);
-
   } catch (error) {
-    console.error("Error creating post:", error);
+    console.error('Error creating post:', error);
     // Solo envía la respuesta si no se ha enviado ya
     if (!res.headersSent) {
-      const message = error instanceof Error ? error.message : "Failed to create post";
+      const message = error instanceof Error ? error.message : 'Failed to create post';
       res.status(500).json({ error: message });
     }
   }
@@ -194,15 +187,17 @@ export const updatePost = async (req: Request, res: Response) => {
 
     // El formulario de edición envía "isPublished"; togglePublishPost envía "published" directamente
     if (isPublished !== undefined) {
-      updateData.published = isPublished === "true" || isPublished === true;
+      updateData.published = isPublished === 'true' || isPublished === true;
     } else if (published !== undefined) {
-      updateData.published = published === "true" || published === true;
+      updateData.published = published === 'true' || published === true;
     }
 
     if (labels !== undefined) {
-      const parsedLabels = typeof labels === "string" ? JSON.parse(labels) : labels;
+      const parsedLabels = typeof labels === 'string' ? JSON.parse(labels) : labels;
       updateData.labels = {
-        connect: parsedLabels.map((labelId: string | number) => ({ id: parseInt(labelId as string) })),
+        connect: parsedLabels.map((labelId: string | number) => ({
+          id: parseInt(labelId as string),
+        })),
       };
     }
 
@@ -211,20 +206,18 @@ export const updatePost = async (req: Request, res: Response) => {
       const fileName = `${uuidv4()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from("images")
+        .from('images')
         .upload(fileName, file.buffer, {
           contentType: file.mimetype,
           upsert: true,
         });
 
       if (uploadError) {
-        console.error("Error uploading to Supabase:", uploadError.message);
-        throw new Error("Error uploading image");
+        console.error('Error uploading to Supabase:', uploadError.message);
+        throw new Error('Error uploading image');
       }
 
-      const { data: publicUrlData } = supabase.storage
-        .from("images")
-        .getPublicUrl(fileName);
+      const { data: publicUrlData } = supabase.storage.from('images').getPublicUrl(fileName);
 
       updateData.coverUrl = publicUrlData?.publicUrl ?? null;
     }
@@ -236,7 +229,7 @@ export const updatePost = async (req: Request, res: Response) => {
     });
     res.json(post);
   } catch (error) {
-    console.error("Error updating post:", error);
+    console.error('Error updating post:', error);
     res.status(400).json({ error: 'Failed to update post' });
   }
 };

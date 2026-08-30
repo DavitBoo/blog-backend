@@ -12,7 +12,12 @@ import { cacheControl, noStore } from '../middlewares/cacheControl';
 
 const router = Router();
 
-router.get('/backend', noStore, passport.authenticate('jwt', { session: false }), getCategoriasBackend);
+router.get(
+  '/backend',
+  noStore,
+  passport.authenticate('jwt', { session: false }),
+  getCategoriasBackend,
+);
 router.get('/', cacheControl(300), getCategorias); // Public
 router.get('/:id', cacheControl(300), getCategoriaById); // Public
 

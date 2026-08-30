@@ -1,13 +1,13 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "CommonJS",
-      "rootDir": "./src",
-      "outDir": "./dist",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      // "typeRoots": ["./node_modules/@types", "./src/types"],   // si hubiese conflictos de tipos me lo plantearía
-    },
-    "exclude": ["prisma"]
-  }
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+    // "typeRoots": ["./node_modules/@types", "./src/types"],   // si hubiese conflictos de tipos me lo plantearía
+  },
+  "exclude": ["prisma"]
+}

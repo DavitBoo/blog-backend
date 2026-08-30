@@ -57,7 +57,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/labels', labelRoutes);
-app.use('/api/media', mediaRoutes); 
+app.use('/api/media', mediaRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/project-categories', projectCategoryRoutes);
 app.use('/api/vida/categorias', vidaCategoriaRoutes);

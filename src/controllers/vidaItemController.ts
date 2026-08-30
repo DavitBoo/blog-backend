@@ -36,7 +36,12 @@ const mapItemPublic = (it: any) => ({
   meta: it.meta,
   tags: (it.tags || []).map((t: any) => t.nombre),
   enlaces: (it.enlaces || []).map((e: any) => ({ tipo: e.tipo, url: e.url, etiqueta: e.etiqueta })),
-  media: (it.media || []).map((m: any) => ({ tipo: m.tipo, src: m.src, alt: m.alt, principal: m.principal })),
+  media: (it.media || []).map((m: any) => ({
+    tipo: m.tipo,
+    src: m.src,
+    alt: m.alt,
+    principal: m.principal,
+  })),
   relacionados: [
     ...(it.relacionesA || []).map((r: any) => r.itemB.slug),
     ...(it.relacionesB || []).map((r: any) => r.itemA.slug),
@@ -67,8 +72,21 @@ const mapItemBackend = (it: any) => ({
   meta: it.meta,
   publicado: it.publicado,
   tags: (it.tags || []).map((t: any) => ({ id: t.id, nombre: t.nombre })),
-  enlaces: (it.enlaces || []).map((e: any) => ({ id: e.id, tipo: e.tipo, url: e.url, etiqueta: e.etiqueta, orden: e.orden })),
-  media: (it.media || []).map((m: any) => ({ id: m.id, tipo: m.tipo, src: m.src, alt: m.alt, principal: m.principal, orden: m.orden })),
+  enlaces: (it.enlaces || []).map((e: any) => ({
+    id: e.id,
+    tipo: e.tipo,
+    url: e.url,
+    etiqueta: e.etiqueta,
+    orden: e.orden,
+  })),
+  media: (it.media || []).map((m: any) => ({
+    id: m.id,
+    tipo: m.tipo,
+    src: m.src,
+    alt: m.alt,
+    principal: m.principal,
+    orden: m.orden,
+  })),
   relacionados: [
     ...(it.relacionesA || []).map((r: any) => r.itemB.id),
     ...(it.relacionesB || []).map((r: any) => r.itemA.id),
@@ -107,7 +125,7 @@ export const getItemsBackend = async (req: Request, res: Response) => {
         destacado: it.destacado,
         publicado: it.publicado,
         tags: it.tags.map((t) => t.nombre),
-      }))
+      })),
     );
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch items' });
@@ -168,15 +186,14 @@ const buildScalarData = (body: any) => ({
 // Cada pareja se guarda una sola vez con itemAId < itemBId.
 const syncRelaciones = async (itemId: number, relacionadosIds: number[]) => {
   const desired = new Set(
-    (relacionadosIds || [])
-      .map((n) => Number(n))
-      .filter((n) => Number.isFinite(n) && n !== itemId)
+    (relacionadosIds || []).map((n) => Number(n)).filter((n) => Number.isFinite(n) && n !== itemId),
   );
 
   const existentes = await prisma.vidaRelacion.findMany({
     where: { OR: [{ itemAId: itemId }, { itemBId: itemId }] },
   });
-  const otroId = (r: { itemAId: number; itemBId: number }) => (r.itemAId === itemId ? r.itemBId : r.itemAId);
+  const otroId = (r: { itemAId: number; itemBId: number }) =>
+    r.itemAId === itemId ? r.itemBId : r.itemAId;
   const existentesIds = new Set(existentes.map(otroId));
 
   const aBorrar = existentes.filter((r) => !desired.has(otroId(r)));
@@ -184,8 +201,10 @@ const syncRelaciones = async (itemId: number, relacionadosIds: number[]) => {
 
   await Promise.all(
     aBorrar.map((r) =>
-      prisma.vidaRelacion.delete({ where: { itemAId_itemBId: { itemAId: r.itemAId, itemBId: r.itemBId } } })
-    )
+      prisma.vidaRelacion.delete({
+        where: { itemAId_itemBId: { itemAId: r.itemAId, itemBId: r.itemBId } },
+      }),
+    ),
   );
   await Promise.all(
     aCrear.map((id) => {
@@ -196,7 +215,7 @@ const syncRelaciones = async (itemId: number, relacionadosIds: number[]) => {
         update: {},
         create: { itemAId, itemBId },
       });
-    })
+    }),
   );
 };
 
@@ -207,22 +226,42 @@ export const createItem = async (req: Request, res: Response): Promise<void> => 
     const tagIds: number[] = Array.isArray(body.tags) ? body.tags.map(Number) : [];
     const enlaces = Array.isArray(body.enlaces) ? body.enlaces : [];
     const media = Array.isArray(body.media) ? body.media : [];
-    const relacionados: number[] = Array.isArray(body.relacionados) ? body.relacionados.map(Number) : [];
+    const relacionados: number[] = Array.isArray(body.relacionados)
+      ? body.relacionados.map(Number)
+      : [];
 
     const item = await prisma.vidaItem.create({
       data: {
         ...buildScalarData(body),
         slug: body.slug ? slugify(body.slug) : slugify(body.titulo),
         tags: { connect: tagIds.map((id) => ({ id })) },
-        enlaces: { create: enlaces.map((e: any, i: number) => ({ tipo: e.tipo, url: e.url, etiqueta: e.etiqueta || null, orden: i })) },
-        media: { create: media.map((m: any, i: number) => ({ tipo: m.tipo, src: m.src, alt: m.alt || null, principal: Boolean(m.principal), orden: i })) },
+        enlaces: {
+          create: enlaces.map((e: any, i: number) => ({
+            tipo: e.tipo,
+            url: e.url,
+            etiqueta: e.etiqueta || null,
+            orden: i,
+          })),
+        },
+        media: {
+          create: media.map((m: any, i: number) => ({
+            tipo: m.tipo,
+            src: m.src,
+            alt: m.alt || null,
+            principal: Boolean(m.principal),
+            orden: i,
+          })),
+        },
       },
       include: ITEM_INCLUDE,
     });
 
     if (relacionados.length) await syncRelaciones(item.id, relacionados);
 
-    const full = await prisma.vidaItem.findUnique({ where: { id: item.id }, include: ITEM_INCLUDE });
+    const full = await prisma.vidaItem.findUnique({
+      where: { id: item.id },
+      include: ITEM_INCLUDE,
+    });
     res.status(201).json(mapItemBackend(full));
   } catch (error) {
     console.error('Error creating vida item:', error);
@@ -240,7 +279,9 @@ export const updateItem = async (req: Request, res: Response): Promise<void> => 
     const tagIds: number[] = Array.isArray(body.tags) ? body.tags.map(Number) : [];
     const enlaces = Array.isArray(body.enlaces) ? body.enlaces : [];
     const media = Array.isArray(body.media) ? body.media : [];
-    const relacionados: number[] = Array.isArray(body.relacionados) ? body.relacionados.map(Number) : [];
+    const relacionados: number[] = Array.isArray(body.relacionados)
+      ? body.relacionados.map(Number)
+      : [];
 
     await prisma.$transaction([
       prisma.vidaItem.update({
@@ -256,14 +297,27 @@ export const updateItem = async (req: Request, res: Response): Promise<void> => 
       ...(enlaces.length
         ? [
             prisma.vidaEnlace.createMany({
-              data: enlaces.map((e: any, i: number) => ({ itemId, tipo: e.tipo, url: e.url, etiqueta: e.etiqueta || null, orden: i })),
+              data: enlaces.map((e: any, i: number) => ({
+                itemId,
+                tipo: e.tipo,
+                url: e.url,
+                etiqueta: e.etiqueta || null,
+                orden: i,
+              })),
             }),
           ]
         : []),
       ...(media.length
         ? [
             prisma.vidaMedia.createMany({
-              data: media.map((m: any, i: number) => ({ itemId, tipo: m.tipo, src: m.src, alt: m.alt || null, principal: Boolean(m.principal), orden: i })),
+              data: media.map((m: any, i: number) => ({
+                itemId,
+                tipo: m.tipo,
+                src: m.src,
+                alt: m.alt || null,
+                principal: Boolean(m.principal),
+                orden: i,
+              })),
             }),
           ]
         : []),

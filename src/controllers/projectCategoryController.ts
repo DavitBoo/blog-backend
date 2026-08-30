@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export const getCategories = async (req: Request, res: Response): Promise<void> => {
   try {
     const categories = await prisma.projectCategory.findMany({
-      include: { _count: { select: { projects: true } } }
+      include: { _count: { select: { projects: true } } },
     });
     res.json(categories);
   } catch (error) {

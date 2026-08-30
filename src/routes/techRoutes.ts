@@ -1,11 +1,8 @@
-import { Router } from "express";
+import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { getTech } from '../controllers/techController';
 
-
-const router = Router();    
-
-
+const router = Router();
 
 const limiter = rateLimit({
   windowMs: 60_000,

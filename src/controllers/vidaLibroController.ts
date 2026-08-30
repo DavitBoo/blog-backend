@@ -35,7 +35,9 @@ export const getLibros = async (req: Request, res: Response) => {
 // GET /api/vida/libros/backend (dashboard)
 export const getLibrosBackend = async (req: Request, res: Response) => {
   try {
-    const libros = await prisma.vidaLibro.findMany({ orderBy: [{ anioLectura: 'desc' }, { orden: 'asc' }] });
+    const libros = await prisma.vidaLibro.findMany({
+      orderBy: [{ anioLectura: 'desc' }, { orden: 'asc' }],
+    });
     res.json(libros);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch libros' });
@@ -60,7 +62,12 @@ export const getLibrosPreview = async (req: Request, res: Response) => {
       total,
       este_anio: esteAnio,
       cifra: info?.cifra || '',
-      destacados: destacados.map((l) => ({ titulo: l.titulo, autor: l.autor, anio_lectura: l.anioLectura, color: l.color })),
+      destacados: destacados.map((l) => ({
+        titulo: l.titulo,
+        autor: l.autor,
+        anio_lectura: l.anioLectura,
+        color: l.color,
+      })),
     });
   } catch (error) {
     console.error('Error fetching lecturas preview:', error);

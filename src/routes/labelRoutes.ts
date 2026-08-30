@@ -1,5 +1,11 @@
 import express from 'express';
-import { createLabel, getAllLabels, getLabelById, updateLabel, deleteLabel } from '../controllers/labelController';
+import {
+  createLabel,
+  getAllLabels,
+  getLabelById,
+  updateLabel,
+  deleteLabel,
+} from '../controllers/labelController';
 import passport from 'passport';
 import { revalidate } from '../middlewares/cacheControl';
 

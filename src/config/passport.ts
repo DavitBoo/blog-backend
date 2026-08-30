@@ -24,13 +24,13 @@ passport.use(
           return done(null, false, { message: 'User not found' });
         }
 
-        return done(null, user); 
+        return done(null, user);
       } catch (error) {
         console.error('Error during authentication:', error);
-        return done(error, false); 
+        return done(error, false);
       }
-    }
-  )
+    },
+  ),
 );
 
 // Middleware to initialize passport
@@ -38,6 +38,5 @@ export const initializePassport = () => passport.initialize();
 
 // Middleware to authenticate requests
 export const authenticateJwt = passport.authenticate('jwt', { session: false });
-
 
 export default passport;

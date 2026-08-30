@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ export const createComment = async (req: Request, res: Response) => {
     });
     res.status(201).json(comment);
   } catch (error) {
-    res.status(400).json({ error: "Failed to add comment" });
+    res.status(400).json({ error: 'Failed to add comment' });
   }
 };
 
@@ -25,11 +25,11 @@ export const getCommentsByPost = async (req: Request, res: Response) => {
   try {
     const comments = await prisma.comment.findMany({
       where: { postId: parseInt(postId), approved: true },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
     });
     res.json(comments);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch comments" });
+    res.status(500).json({ error: 'Failed to fetch comments' });
   }
 };
 
@@ -37,14 +37,14 @@ export const getCommentsByPost = async (req: Request, res: Response) => {
 export const getAllComments = async (req: Request, res: Response) => {
   try {
     const comments = await prisma.comment.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
       include: {
         post: { select: { id: true, title: true, slug: true } },
       },
     });
     res.json(comments);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch comments" });
+    res.status(500).json({ error: 'Failed to fetch comments' });
   }
 };
 
@@ -56,7 +56,7 @@ export const deleteComment = async (req: Request, res: Response) => {
     await prisma.comment.delete({ where: { id: parseInt(id) } });
     res.status(204).send();
   } catch (error) {
-    res.status(400).json({ error: "Failed to delete comment" });
+    res.status(400).json({ error: 'Failed to delete comment' });
   }
 };
 
@@ -71,7 +71,7 @@ export const toggleApproveComment = async (req: Request, res: Response) => {
     });
 
     if (!current) {
-      res.status(404).json({ error: "Comment not found" });
+      res.status(404).json({ error: 'Comment not found' });
       return;
     }
 
@@ -82,6 +82,6 @@ export const toggleApproveComment = async (req: Request, res: Response) => {
 
     res.json(updated);
   } catch (error) {
-    res.status(400).json({ error: "Failed to update comment" });
+    res.status(400).json({ error: 'Failed to update comment' });
   }
 };
