@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../utils/prisma';
 import { slugify } from '../utils/slugify';
-
-const prisma = new PrismaClient();
 
 const ITEM_INCLUDE = {
   categoria: true,

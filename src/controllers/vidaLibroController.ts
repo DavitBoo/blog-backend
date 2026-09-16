@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../utils/prisma';
 
 // GET /api/vida/libros (público, catálogo /libros)
 // Devuelve el catálogo completo de una vez: la página agrupa/filtra/busca en el

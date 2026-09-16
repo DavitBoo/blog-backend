@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../utils/prisma';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,8 +9,6 @@ import { supabase } from '../utils/supabase';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-
-const prisma = new PrismaClient();
 
 // Get all published posts
 export const getPosts = async (req: Request, res: Response) => {

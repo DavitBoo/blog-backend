@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../utils/prisma';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { slugify } from '../utils/slugify';
 import { supabase } from '../utils/supabase';
-
-const prisma = new PrismaClient();
 
 // Get all published projects
 export const getProjects = async (req: Request, res: Response) => {
