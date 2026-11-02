@@ -11,7 +11,6 @@ import { revalidate } from '../middlewares/cacheControl';
 
 const router = express.Router();
 
-router.post('/:postId', createLabel);
 router.post('/', passport.authenticate('jwt', { session: false }), createLabel);
 router.get('/', revalidate, getAllLabels); // Public, also used by the dashboard
 router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteLabel);

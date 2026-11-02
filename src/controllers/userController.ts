@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '../config/env';
 import { prisma } from '../utils/prisma';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; // just for typescript types
 
 export const loginUser = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;

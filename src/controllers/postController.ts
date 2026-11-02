@@ -1,14 +1,10 @@
 import { Request, Response } from 'express';
 import { prisma } from '../utils/prisma';
-import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 
 import { slugify } from '../utils/slugify';
 
 import { supabase } from '../utils/supabase';
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
 
 // Get all published posts
 export const getPosts = async (req: Request, res: Response) => {

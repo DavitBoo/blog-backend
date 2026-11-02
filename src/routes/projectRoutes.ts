@@ -9,7 +9,7 @@ import {
   deleteProject,
   getProjectsBackEnd,
 } from '../controllers/projectController';
-import { upload } from '../middlewares/multer';
+import { uploadImageFile } from '../middlewares/multer';
 import { cacheControl, revalidate, noStore } from '../middlewares/cacheControl';
 import { optionalJwtAuth } from '../middlewares/optionalJwtAuth';
 
@@ -27,15 +27,15 @@ router.get('/:id', revalidate, optionalJwtAuth, getProjectById); // Public, draf
 
 router.post(
   '/',
-  upload.single('cover'),
   passport.authenticate('jwt', { session: false }),
+  uploadImageFile('cover'),
   createProject,
 );
 
 router.patch(
   '/:id',
-  upload.single('cover'),
   passport.authenticate('jwt', { session: false }),
+  uploadImageFile('cover'),
   updateProject,
 );
 

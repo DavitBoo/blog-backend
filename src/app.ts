@@ -19,6 +19,10 @@ import vidaLibroRoutes from './routes/vidaLibroRoutes';
 
 const app = express();
 
+// Saltos de proxy delante del servidor: sin esto, los límites de peticiones ven la IP del proxy
+// y todos los visitantes comparten contador. Un valor demasiado alto permitiría falsear la IP.
+app.set('trust proxy', Number(process.env.TRUST_PROXY_HOPS ?? 1));
+
 app.use(helmet());
 
 const generalLimiter = rateLimit({

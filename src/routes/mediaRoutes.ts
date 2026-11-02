@@ -8,7 +8,7 @@ import {
   deleteImage,
   deleteMultipleImages,
 } from '../controllers/mediaController';
-import { upload } from '../middlewares/multer';
+import { uploadImageFile } from '../middlewares/multer';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ const router = Router();
 router.post(
   '/upload',
   passport.authenticate('jwt', { session: false }),
-  upload.single('image'),
+  uploadImageFile('image'),
   uploadImage,
 );
 

@@ -1,14 +1,47 @@
 import { Request, Response } from 'express';
 import { prisma } from '../utils/prisma';
 
-// Add a comment to a post (public)
+const MAX_COMMENT_LENGTH = 2000;
+const MAX_EMAIL_LENGTH = 254;
+const EMAIL_FORMAT = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const isValidEmail = (email: unknown): email is string =>
+  typeof email === 'string' && email.length <= MAX_EMAIL_LENGTH && EMAIL_FORMAT.test(email);
+
+// Add a comment to a post (public). It stays hidden until approved from the dashboard
 export const createComment = async (req: Request, res: Response) => {
-  const { postId } = req.params;
-  const { email, content } = req.body;
+  const postId = Number(req.params.postId);
+  const { email, content } = req.body ?? {};
+  const trimmedContent = typeof content === 'string' ? content.trim() : '';
+
+  if (!Number.isInteger(postId)) {
+    res.status(400).json({ error: 'Artículo no válido.' });
+    return;
+  }
+  if (!isValidEmail(email)) {
+    res.status(400).json({ error: 'Introduce un email válido.' });
+    return;
+  }
+  if (!trimmedContent || trimmedContent.length > MAX_COMMENT_LENGTH) {
+    res.status(400).json({
+      error: `El comentario debe tener entre 1 y ${MAX_COMMENT_LENGTH} caracteres.`,
+    });
+    return;
+  }
 
   try {
+    const post = await prisma.post.findFirst({
+      where: { id: postId, published: true },
+      select: { id: true },
+    });
+    if (!post) {
+      res.status(404).json({ error: 'Post not found' });
+      return;
+    }
+
     const comment = await prisma.comment.create({
-      data: { email, content, postId: parseInt(postId) },
+      data: { email, content: trimmedContent, postId, approved: false },
+      select: { id: true, approved: true, createdAt: true },
     });
     res.status(201).json(comment);
   } catch (error) {

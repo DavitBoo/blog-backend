@@ -9,7 +9,7 @@ import {
   deletePost,
   getPostsBackEnd,
 } from '../controllers/postController';
-import { upload } from '../middlewares/multer';
+import { uploadImageFile } from '../middlewares/multer';
 import { cacheControl, revalidate, noStore } from '../middlewares/cacheControl';
 import { optionalJwtAuth } from '../middlewares/optionalJwtAuth';
 
@@ -22,20 +22,14 @@ router.get('/', cacheControl(60), getPosts); // Public: Get all published posts
 router.get('/:id', revalidate, optionalJwtAuth, getPostById); // Public, drafts require a session (dashboard)
 router.post(
   '/',
-  (req, res, next) => {
-    console.log('Debug - Request headers:', req.headers);
-    console.log('Debug - Request file:', req.file);
-    console.log('Debug - Request body:', req.body);
-    next();
-  },
-  upload.single('cover'),
   passport.authenticate('jwt', { session: false }),
+  uploadImageFile('cover'),
   createPost,
 );
 router.patch(
   '/:id',
-  upload.single('cover'),
   passport.authenticate('jwt', { session: false }),
+  uploadImageFile('cover'),
   updatePost,
 ); // Protected: Update a post (requires authentication)
 router.delete('/:id', passport.authenticate('jwt', { session: false }), deletePost); // Protected: Delete a post (requires authentication)

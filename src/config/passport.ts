@@ -1,8 +1,7 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { JWT_SECRET } from './env';
 import { prisma } from '../utils/prisma';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
 // Define the JWT strategy
 passport.use(

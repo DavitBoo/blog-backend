@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 export const uploadImage = async (req: Request, res: Response): Promise<void> => {
   try {
     const file = req.file;
-    console.log(req);
     //     {
     //   fieldname: 'file',
     //   originalname: 'photo.png',
