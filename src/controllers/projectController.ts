@@ -62,15 +62,25 @@ export const getProjectBySlug = async (req: Request, res: Response): Promise<voi
       return;
     }
 
-    await prisma.project.update({
-      where: { id: project.id },
-      data: { views: { increment: 1 } },
-    });
-
     res.json([project]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error fetching project by slug' });
+  }
+};
+
+// Register a reader's visit. SQL directo porque Prisma actualizaría updatedAt, y una visita no es
+// una edición del proyecto
+export const registerProjectView = async (req: Request, res: Response): Promise<void> => {
+  const { slug } = req.params;
+
+  try {
+    const updated =
+      await prisma.$executeRaw`UPDATE "Project" SET "views" = "views" + 1 WHERE "slug" = ${slug} AND "published" = true`;
+    res.status(updated > 0 ? 204 : 404).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to register view' });
   }
 };
 

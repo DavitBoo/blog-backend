@@ -5,6 +5,7 @@ import {
   getProjects,
   getProjectById,
   getProjectBySlug,
+  registerProjectView,
   updateProject,
   deleteProject,
   getProjectsBackEnd,
@@ -24,6 +25,8 @@ router.get(
 router.get('/bySlug/:slug', cacheControl(60), getProjectBySlug);
 router.get('/', cacheControl(60), getProjects); // Public
 router.get('/:id', revalidate, optionalJwtAuth, getProjectById); // Public, drafts require a session (dashboard)
+
+router.post('/bySlug/:slug/view', registerProjectView); // Public
 
 router.post(
   '/',

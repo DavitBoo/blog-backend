@@ -5,6 +5,7 @@ import {
   getPosts,
   getPostById,
   getPostBySlug,
+  registerPostView,
   updatePost,
   deletePost,
   getPostsBackEnd,
@@ -20,6 +21,7 @@ router.get('/backend/', noStore, passport.authenticate('jwt', { session: false }
 router.get('/bySlug/:slug', cacheControl(60), getPostBySlug);
 router.get('/', cacheControl(60), getPosts); // Public: Get all published posts
 router.get('/:id', revalidate, optionalJwtAuth, getPostById); // Public, drafts require a session (dashboard)
+router.post('/bySlug/:slug/view', registerPostView); // Public
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),

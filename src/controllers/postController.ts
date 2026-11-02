@@ -6,7 +6,14 @@ import { slugify } from '../utils/slugify';
 
 import { supabase } from '../utils/supabase';
 
-// Get all published posts
+const MAX_POSTS_LIMIT = 100;
+
+const parseLimit = (value: unknown) => {
+  const limit = Number(value);
+  return Number.isInteger(limit) && limit > 0 ? Math.min(limit, MAX_POSTS_LIMIT) : undefined;
+};
+
+// Get published posts, newest first (?limit=N returns only the latest N)
 export const getPosts = async (req: Request, res: Response) => {
   try {
     const posts = await prisma.post.findMany({
@@ -15,6 +22,8 @@ export const getPosts = async (req: Request, res: Response) => {
         author: { select: { name: true } },
         labels: true,
       },
+      orderBy: { createdAt: 'desc' },
+      take: parseLimit(req.query.limit),
     });
     res.json(posts);
   } catch (error) {
@@ -70,15 +79,25 @@ export const getPostBySlug = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    await prisma.post.update({
-      where: { id: post.id },
-      data: { views: { increment: 1 } },
-    });
-
     res.json([post]); // opcional: o solo `res.json(post)` si prefieres
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error fetching post by slug' });
+  }
+};
+
+// Register a reader's visit. SQL directo porque Prisma actualizaría updatedAt, y una visita no es
+// una edición del artículo
+export const registerPostView = async (req: Request, res: Response): Promise<void> => {
+  const { slug } = req.params;
+
+  try {
+    const updated =
+      await prisma.$executeRaw`UPDATE "Post" SET "views" = "views" + 1 WHERE "slug" = ${slug} AND "published" = true`;
+    res.status(updated > 0 ? 204 : 404).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to register view' });
   }
 };
 
@@ -87,6 +106,7 @@ export const getPostsBackEnd = async (req: Request, res: Response) => {
   try {
     const posts = await prisma.post.findMany({
       include: { author: { select: { name: true } }, labels: true },
+      orderBy: { createdAt: 'desc' },
     });
     res.json(posts);
   } catch (error) {
