@@ -3,6 +3,7 @@ import { prisma } from '../utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
 import { slugify } from '../utils/slugify';
+import { toPostSummary } from '../utils/postSummary';
 
 import { supabase } from '../utils/supabase';
 
@@ -13,7 +14,7 @@ const parseLimit = (value: unknown) => {
   return Number.isInteger(limit) && limit > 0 ? Math.min(limit, MAX_POSTS_LIMIT) : undefined;
 };
 
-// Get published posts, newest first (?limit=N returns only the latest N)
+// Get published posts without their full content, newest first (?limit=N returns the latest N)
 export const getPosts = async (req: Request, res: Response) => {
   try {
     const posts = await prisma.post.findMany({
@@ -25,9 +26,33 @@ export const getPosts = async (req: Request, res: Response) => {
       orderBy: { createdAt: 'desc' },
       take: parseLimit(req.query.limit),
     });
-    res.json(posts);
+    res.json(posts.map(toPostSummary));
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch posts' });
+  }
+};
+
+// Get the slug of a random published post
+export const getRandomPost = async (req: Request, res: Response): Promise<void> => {
+  const where = { published: true, slug: { not: null } };
+
+  try {
+    const total = await prisma.post.count({ where });
+    const post = await prisma.post.findFirst({
+      where,
+      select: { slug: true },
+      orderBy: { id: 'asc' },
+      skip: Math.floor(Math.random() * total),
+    });
+
+    if (!post) {
+      res.status(404).json({ error: 'Post not found' });
+      return;
+    }
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch random post' });
   }
 };
 

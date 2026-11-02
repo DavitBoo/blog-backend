@@ -3,6 +3,7 @@ import passport from 'passport';
 import {
   createPost,
   getPosts,
+  getRandomPost,
   getPostById,
   getPostBySlug,
   registerPostView,
@@ -18,6 +19,7 @@ const router = Router();
 
 // Protect routes with Passport
 router.get('/backend/', noStore, passport.authenticate('jwt', { session: false }), getPostsBackEnd); // This goes first in order to not tro 'backend' string as an id
+router.get('/random', noStore, getRandomPost); // Public, goes before ':id' like 'backend'
 router.get('/bySlug/:slug', cacheControl(60), getPostBySlug);
 router.get('/', cacheControl(60), getPosts); // Public: Get all published posts
 router.get('/:id', revalidate, optionalJwtAuth, getPostById); // Public, drafts require a session (dashboard)
