@@ -11,6 +11,7 @@ import {
 } from '../controllers/projectController';
 import { upload } from '../middlewares/multer';
 import { cacheControl, revalidate, noStore } from '../middlewares/cacheControl';
+import { optionalJwtAuth } from '../middlewares/optionalJwtAuth';
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.get(
 );
 router.get('/bySlug/:slug', cacheControl(60), getProjectBySlug);
 router.get('/', cacheControl(60), getProjects); // Public
-router.get('/:id', revalidate, getProjectById); // Public, also used by the dashboard edit screen
+router.get('/:id', revalidate, optionalJwtAuth, getProjectById); // Public, drafts require a session (dashboard)
 
 router.post(
   '/',

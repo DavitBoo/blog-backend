@@ -51,7 +51,6 @@ app.use(express.json());
 
 app.use('/api', generalLimiter);
 app.use('/api/users/login', authLimiter);
-app.use('/api/users/register', authLimiter);
 
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);

@@ -192,8 +192,9 @@ export const updatePost = async (req: Request, res: Response) => {
 
     if (labels !== undefined) {
       const parsedLabels = typeof labels === 'string' ? JSON.parse(labels) : labels;
+      // "set" sustituye las etiquetas; con "connect" nunca se quitaban las desmarcadas
       updateData.labels = {
-        connect: parsedLabels.map((labelId: string | number) => ({
+        set: parsedLabels.map((labelId: string | number) => ({
           id: parseInt(labelId as string),
         })),
       };

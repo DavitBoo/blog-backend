@@ -5,20 +5,6 @@ import { prisma } from '../utils/prisma';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; // just for typescript types
 
-export const registerUser = async (req: Request, res: Response) => {
-  const { email, password, name, role } = req.body;
-
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
-      data: { email, password: hashedPassword, name, role },
-    });
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(400).json({ error: 'User registration failed' });
-  }
-};
-
 export const loginUser = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
 

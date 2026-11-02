@@ -1,4 +1,4 @@
-import { RequestHandler, Router } from 'express';
+import { Router } from 'express';
 import passport from 'passport';
 import {
   createPost,
@@ -11,14 +11,9 @@ import {
 } from '../controllers/postController';
 import { upload } from '../middlewares/multer';
 import { cacheControl, revalidate, noStore } from '../middlewares/cacheControl';
+import { optionalJwtAuth } from '../middlewares/optionalJwtAuth';
 
 const router = Router();
-const jwtAuth = passport.authenticate('jwt', { session: false });
-
-// Para rutas públicas que muestran más a quien tiene sesión: sin token sigue como anónimo, pero un
-// token caducado da 401 para que el dashboard pueda avisar en vez de recibir un 404 engañoso
-const optionalJwtAuth: RequestHandler = (req, res, next) =>
-  req.headers.authorization ? jwtAuth(req, res, next) : next();
 
 // Protect routes with Passport
 router.get('/backend/', noStore, passport.authenticate('jwt', { session: false }), getPostsBackEnd); // This goes first in order to not tro 'backend' string as an id

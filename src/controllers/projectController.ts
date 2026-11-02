@@ -11,7 +11,7 @@ export const getProjects = async (req: Request, res: Response) => {
     const projects = await prisma.project.findMany({
       where: { published: true },
       include: {
-        author: { select: { name: true, email: true } },
+        author: { select: { name: true } },
         category: true,
       },
       orderBy: { createdAt: 'desc' },
@@ -29,14 +29,17 @@ export const getProjectById = async (req: Request, res: Response): Promise<any> 
     const project = await prisma.project.findUnique({
       where: { id: parseInt(id) },
       include: {
-        author: { select: { name: true, email: true } },
+        author: { select: { name: true } },
         category: true,
       },
     });
 
-    if (!project) {
+    // Un borrador no existe para quien no tiene sesión: 404 para no revelar que ese id está en uso
+    if (!project || (!project.published && !req.user)) {
       return res.status(404).json({ error: 'Project not found' });
     }
+
+    if (!project.published) res.setHeader('Cache-Control', 'no-store');
     res.json(project);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch project' });
@@ -48,9 +51,9 @@ export const getProjectBySlug = async (req: Request, res: Response): Promise<voi
   const { slug } = req.params;
   try {
     const project = await prisma.project.findFirst({
-      where: { slug },
+      where: { slug, published: true },
       include: {
-        author: { select: { name: true, email: true } },
+        author: { select: { name: true } },
         category: true,
       },
     });
@@ -77,7 +80,7 @@ export const getProjectsBackEnd = async (req: Request, res: Response) => {
   try {
     const projects = await prisma.project.findMany({
       include: {
-        author: { select: { name: true, email: true } },
+        author: { select: { name: true } },
         category: true,
       },
       orderBy: { createdAt: 'desc' },
@@ -137,7 +140,7 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
       },
       include: {
         category: true,
-        author: true,
+        author: { select: { name: true } },
       },
     });
 
