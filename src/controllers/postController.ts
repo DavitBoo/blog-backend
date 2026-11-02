@@ -16,7 +16,7 @@ export const getPosts = async (req: Request, res: Response) => {
     const posts = await prisma.post.findMany({
       where: { published: true },
       include: {
-        author: { select: { name: true, email: true } },
+        author: { select: { name: true } },
         labels: true,
       },
     });
@@ -39,16 +39,17 @@ export const getPostById = async (req: Request, res: Response): Promise<any> => 
     const post = await prisma.post.findUnique({
       where: { id: parseInt(id) },
       include: {
-        author: { select: { name: true, email: true } },
-        comments: true,
+        author: { select: { name: true } },
         labels: true,
       },
     });
 
-    if (!post) {
+    // Un borrador no existe para quien no tiene sesión: 404 para no revelar que ese id está en uso
+    if (!post || (!post.published && !req.user)) {
       return res.status(404).json({ error: 'Post not found' });
     }
 
+    if (!post.published) res.setHeader('Cache-Control', 'no-store');
     res.json(post);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch post :((' });
@@ -61,10 +62,9 @@ export const getPostBySlug = async (req: Request, res: Response): Promise<void> 
 
   try {
     const post = await prisma.post.findFirst({
-      where: { slug },
+      where: { slug, published: true },
       include: {
-        author: { select: { name: true, email: true } },
-        comments: true,
+        author: { select: { name: true } },
         labels: true,
       },
     });
@@ -90,7 +90,7 @@ export const getPostBySlug = async (req: Request, res: Response): Promise<void> 
 export const getPostsBackEnd = async (req: Request, res: Response) => {
   try {
     const posts = await prisma.post.findMany({
-      include: { author: { select: { name: true, email: true } } },
+      include: { author: { select: { name: true } }, labels: true },
     });
     res.json(posts);
   } catch (error) {
@@ -154,7 +154,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
       },
       include: {
         labels: true,
-        author: true,
+        author: { select: { name: true } },
       },
     });
 
@@ -223,7 +223,7 @@ export const updatePost = async (req: Request, res: Response) => {
     const post = await prisma.post.update({
       where: { id: parseInt(id) },
       data: updateData,
-      include: { labels: true, author: true },
+      include: { labels: true, author: { select: { name: true } } },
     });
     res.json(post);
   } catch (error) {
