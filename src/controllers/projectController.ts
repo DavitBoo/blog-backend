@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import { prisma } from '../utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 import { slugify } from '../utils/slugify';
+import { toContentSummary } from '../utils/contentSummary';
 import { supabase } from '../utils/supabase';
 
-// Get all published projects
+// Get all published projects, without their full content
 export const getProjects = async (req: Request, res: Response) => {
   try {
     const projects = await prisma.project.findMany({
@@ -15,7 +16,7 @@ export const getProjects = async (req: Request, res: Response) => {
       },
       orderBy: { createdAt: 'desc' },
     });
-    res.json(projects);
+    res.json(projects.map(toContentSummary));
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch projects' });
   }

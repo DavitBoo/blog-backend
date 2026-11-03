@@ -3,8 +3,8 @@ import { decode } from 'html-entities';
 const EXCERPT_LENGTH = 300;
 const WORDS_PER_MINUTE = 200;
 
-// Los listados solo necesitan un extracto: enviar el HTML completo de cada artículo pesaba mucho
-export const toPostSummary = <T extends { content: string }>({ content, ...post }: T) => {
+// Los listados solo necesitan un extracto: enviar el HTML completo de cada elemento pesaba mucho
+export const toContentSummary = <T extends { content: string }>({ content, ...post }: T) => {
   // El contenido puede venir codificado: se decodifica para quitar las etiquetas y otra vez para
   // que el texto resultante no enseñe entidades como &amp;
   const text = decode(
